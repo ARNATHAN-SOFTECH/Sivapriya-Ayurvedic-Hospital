@@ -1,0 +1,1235 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Sivapriya Ayurvedic Hospital
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* ============================================================
+   HERO SECTION
+============================================================ */
+
+.hero {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.58) 40%,
+            rgba(0, 0, 0, 0.30) 75%,
+            rgba(0, 0, 0, 0.20) 100%
+        ),
+        url("{% static 'images/img.webp' %}");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   HERO CONTAINER
+============================================================ */
+
+.hero .container {
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 80px 60px;
+
+    display: flex;
+    align-items: center;
+}
+
+
+/* ============================================================
+   HERO CONTENT
+============================================================ */
+
+.hero-content {
+    max-width: 780px;
+    color: #ffffff;
+}
+
+
+/* ============================================================
+   HERO BADGE
+============================================================ */
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50px;
+
+    background: rgba(234, 222, 222, 0.94);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    color: #234c2c;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+
+    margin-bottom: 25px;
+}
+
+.hero-badge i {
+    color: #2f6b3f;
+    font-size: 16px;
+}
+
+
+/* ============================================================
+   HERO TITLE
+============================================================ */
+
+.hero h2 {
+    margin: 0 0 22px;
+
+    font-size: clamp(42px, 5.5vw, 78px);
+
+    line-height: 1.05;
+
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.45);
+}
+
+.hero h2 span {
+    display: block;
+
+    color: #c8e6a0;
+
+    margin-top: 5px;
+}
+
+
+/* ============================================================
+   HERO DESCRIPTION
+============================================================ */
+
+.hero-subtitle {
+    max-width: 720px;
+
+    margin: 0;
+
+    font-size: 18px;
+
+    line-height: 1.8;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ============================================================
+   HERO BUTTON
+============================================================ */
+
+.hero-actions {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    margin-top: 35px;
+}
+
+.hero-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 14px 30px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* ============================================================
+   OP REGISTRATION BUTTON
+============================================================ */
+
+.hero-btn-primary {
+    background: #2f6b3f;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.hero-btn-primary:hover {
+    background: #3e8250;
+
+    color: #ffffff;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.30);
+}
+
+
+/* ============================================================
+   HERO INFORMATION
+============================================================ */
+
+.hero-info {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    margin-top: 45px;
+
+    padding-top: 25px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.25);
+}
+
+.hero-info-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: rgba(255, 255, 255, 0.9);
+
+    font-size: 14px;
+}
+
+.hero-info-item i {
+    color: #c8e6a0;
+
+    font-size: 18px;
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 1100px) {
+
+    .hero .container {
+        padding: 70px 40px;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 700px) {
+
+    .hero {
+        min-height: calc(100vh - 60px);
+
+        background-position: center center;
+
+        background-image:
+            linear-gradient(
+                rgba(0, 0, 0, 0.68),
+                rgba(0, 0, 0, 0.72)
+            ),
+            url("{% static 'images/img.webp' %}");
+    }
+
+
+    .hero .container {
+        padding: 60px 25px;
+
+        align-items: center;
+    }
+
+
+    .hero-content {
+        width: 100%;
+    }
+
+
+    .hero-badge {
+        font-size: 11px;
+
+        padding: 8px 13px;
+    }
+
+
+    .hero h2 {
+        font-size: 42px;
+
+        letter-spacing: -0.8px;
+    }
+
+
+    .hero-subtitle {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+
+
+    .hero-actions {
+        margin-top: 30px;
+    }
+
+
+    .hero-btn {
+        width: auto;
+    }
+
+
+    .hero-info {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+        margin-top: 30px;
+    }
+
+}
+
+
+
+/* ============================================================
+   AYURVEDIC BENEFITS SECTION
+============================================================ */
+
+.ayurveda-benefits {
+    position: relative;
+
+    padding: 100px 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f5f8f2 0%,
+            #ffffff 100%
+        );
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   CONTAINER
+============================================================ */
+
+.benefits-container {
+    width: 90%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   SECTION HEADING
+============================================================ */
+
+.benefits-heading {
+    max-width: 760px;
+
+    margin: 0 auto 60px;
+
+    text-align: center;
+}
+
+.benefits-label {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+
+    padding: 8px 16px;
+
+    border-radius: 50px;
+
+    background: #e7f1e4;
+
+    color: #2f6b3f;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.benefits-label i {
+    font-size: 14px;
+}
+
+.benefits-heading h2 {
+    margin: 0;
+
+    color: #234c2c;
+
+    font-size: clamp(36px, 4vw, 54px);
+
+    line-height: 1.15;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+}
+
+.benefits-heading h2 span {
+    color: #5c8b49;
+}
+
+.benefits-heading p {
+    max-width: 650px;
+
+    margin: 20px auto 0;
+
+    color: #68756c;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+
+/* ============================================================
+   BENEFITS GRID
+============================================================ */
+
+.benefits-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 28px;
+}
+
+
+/* ============================================================
+   BENEFIT CARD
+============================================================ */
+
+.benefit-card {
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e4e9e1;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 30px rgba(35, 76, 44, 0.07);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 18px 40px rgba(35, 76, 44, 0.13);
+}
+
+
+/* ============================================================
+   BENEFIT IMAGE
+============================================================ */
+
+.benefit-image {
+    position: relative;
+
+    width: 100%;
+
+    height: 240px;
+
+    overflow: hidden;
+
+    background: #eaf1e7;
+}
+
+.benefit-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform 0.5s ease;
+}
+
+.benefit-card:hover .benefit-image img {
+    transform: scale(1.07);
+}
+
+
+
+
+/* ============================================================
+   BENEFIT CONTENT
+============================================================ */
+
+.benefit-content {
+    position: relative;
+
+    padding: 28px;
+}
+
+.benefit-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 12px;
+
+    background: #e8f2e6;
+
+    color: #2f6b3f;
+
+    font-size: 19px;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.benefit-card:hover .benefit-icon {
+    background: #2f6b3f;
+
+    color: #ffffff;
+}
+
+.benefit-content h3 {
+    margin: 0 0 12px;
+
+    color: #263d2b;
+
+    font-size: 20px;
+
+    font-weight: 750;
+}
+
+.benefit-content p {
+    margin: 0;
+
+    color: #6f7b72;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+}
+
+
+/* ============================================================
+   BOTTOM CTA
+============================================================ */
+
+.benefits-footer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    margin-top: 60px;
+
+    padding: 28px 32px;
+
+    border-radius: 18px;
+
+    background: #234c2c;
+
+    box-shadow:
+        0 12px 35px rgba(35, 76, 44, 0.18);
+}
+
+.benefits-footer-icon {
+    min-width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    color: #c8e6a0;
+
+    font-size: 22px;
+}
+
+.benefits-footer h3 {
+    margin: 0 0 6px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+}
+
+.benefits-footer p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.benefits-button {
+    margin-left: auto;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+
+    padding: 13px 20px;
+
+    border-radius: 8px;
+
+    background: #c8e6a0;
+
+    color: #234c2c;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.benefits-button:hover {
+    background: #ffffff;
+
+    color: #234c2c;
+
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 1000px) {
+
+    .ayurveda-benefits {
+        padding: 80px 0;
+    }
+
+    .benefits-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .benefits-footer {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .benefits-button {
+        margin-left: 80px;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 650px) {
+
+    .ayurveda-benefits {
+        padding: 65px 0;
+    }
+
+    .benefits-container {
+        width: 92%;
+    }
+
+    .benefits-heading {
+        margin-bottom: 40px;
+    }
+
+    .benefits-heading h2 {
+        font-size: 34px;
+    }
+
+    .benefits-heading p {
+        font-size: 14px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+
+    .benefit-image {
+        height: 230px;
+    }
+
+    .benefit-content {
+        padding: 24px;
+    }
+
+    .benefits-footer {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 25px;
+    }
+
+    .benefits-button {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+============================================================ */
+
+@media (max-width: 400px) {
+
+    .benefits-heading h2 {
+        font-size: 30px;
+    }
+
+    .benefit-image {
+        height: 210px;
+    }
+
+    .benefit-content h3 {
+        font-size: 18px;
+    }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+============================================================ */
+
+@media (max-width: 450px) {
+
+    .hero .container {
+        padding: 45px 20px;
+    }
+
+
+    .hero h2 {
+        font-size: 36px;
+    }
+
+
+    .hero-subtitle {
+        font-size: 14px;
+    }
+
+
+    .hero-info-item {
+        font-size: 13px;
+    }
+
+}
+
+</style>
+
+
+<!-- ============================================================
+     FULL SCREEN HERO
+============================================================ -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+
+            <!-- =================================================
+                 BADGE
+            ================================================== -->
+
+            <div class="hero-badge">
+
+                <i class="fa-solid fa-leaf"></i>
+
+                AYURVEDIC HEALTHCARE
+
+            </div>
+
+
+            <!-- =================================================
+                 TITLE
+            ================================================== -->
+
+            <h2>
+
+                Sivapriya Ayurvedic
+
+                <span>Hospital</span>
+
+            </h2>
+
+
+            <!-- =================================================
+                 DESCRIPTION
+            ================================================== -->
+
+            <p class="hero-subtitle">
+
+                Experience authentic Ayurvedic healthcare with
+                compassionate patient care, traditional
+                treatments, experienced doctors and holistic
+                wellness.
+
+            </p>
+
+
+            <!-- =================================================
+                 OP REGISTRATION BUTTON
+            ================================================== -->
+
+            <div class="hero-actions">
+
+                <a href="#"
+                   class="hero-btn hero-btn-primary">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    OP Registration
+
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 HERO INFORMATION
+            ================================================== -->
+
+            <div class="hero-info">
+
+
+                <div class="hero-info-item">
+
+                    <i class="fa-solid fa-hospital"></i>
+
+                    <span>
+                        Trusted Ayurvedic Healthcare
+                    </span>
+
+                </div>
+
+
+                <div class="hero-info-item">
+
+                    <i class="fa-solid fa-leaf"></i>
+
+                    <span>
+                        Traditional Ayurvedic Care
+                    </span>
+
+                </div>
+
+
+                <div class="hero-info-item">
+
+                    <i class="fa-solid fa-user-doctor"></i>
+
+                    <span>
+                        Experienced Doctors
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ============================================================
+     AYURVEDIC BENEFITS SECTION
+============================================================ -->
+
+<section class="ayurveda-benefits">
+
+    <div class="benefits-container">
+
+        <!-- SECTION HEADER -->
+
+        <div class="benefits-heading">
+
+            <span class="benefits-label">
+                <i class="fa-solid fa-leaf"></i>
+                NATURAL WELLNESS
+            </span>
+
+            <h2>
+                The Benefits of
+                <span>Ayurveda</span>
+            </h2>
+
+            <p>
+                Discover the timeless principles of Ayurveda and
+                experience a natural approach to health, healing
+                and complete well-being.
+            </p>
+
+        </div>
+
+
+        <!-- BENEFITS GRID -->
+
+        <div class="benefits-grid">
+
+
+            <!-- BENEFIT 1 -->
+
+            <article class="benefit-card">
+
+                <div class="benefit-image">
+
+                    <img
+                        src="{% static 'images/ayurveda-benefit-1.jpg' %}"
+                        alt="Natural Ayurvedic healing"
+                    >
+
+                    
+
+                </div>
+
+                <div class="benefit-content">
+
+                    <div class="benefit-icon">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+
+                    <h3>
+                        Natural Healing
+                    </h3>
+
+                    <p>
+                        Ayurveda focuses on natural therapies and
+                        traditional healing practices that support
+                        the body's natural ability to restore balance.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- BENEFIT 2 -->
+
+            <article class="benefit-card">
+
+                <div class="benefit-image">
+
+                    <img
+                        src="{% static 'images/ayurveda-benefit-2.jpg' %}"
+                        alt="Ayurvedic herbs and wellness"
+                    >
+
+                    
+
+                </div>
+
+                <div class="benefit-content">
+
+                    <div class="benefit-icon">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+
+                    <h3>
+                        Herbal Wellness
+                    </h3>
+
+                    <p>
+                        Traditional Ayurvedic herbs and plant-based
+                        preparations have been used for generations
+                        as part of holistic wellness practices.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- BENEFIT 3 -->
+
+            <article class="benefit-card">
+
+                <div class="benefit-image">
+
+                    <img
+                        src="{% static 'images/ayurveda-benefit-3.jpg' %}"
+                        alt="Ayurvedic relaxation therapy"
+                    >
+
+                    
+
+                </div>
+
+                <div class="benefit-content">
+
+                    <div class="benefit-icon">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+
+                    <h3>
+                        Stress Relief
+                    </h3>
+
+                    <p>
+                        Ayurvedic wellness practices can encourage
+                        relaxation and help create a calmer and more
+                        balanced lifestyle.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- BENEFIT 4 -->
+
+            <article class="benefit-card">
+
+                <div class="benefit-image">
+
+                    <img
+                        src="{% static 'images/ayurveda-benefit-4.jpg' %}"
+                        alt="Ayurvedic healthy lifestyle"
+                    >
+
+                
+                </div>
+
+                <div class="benefit-content">
+
+                    <div class="benefit-icon">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+
+                    <h3>
+                        Holistic Wellness
+                    </h3>
+
+                    <p>
+                        Ayurveda considers lifestyle, nutrition,
+                        daily routines and overall well-being as
+                        important parts of maintaining balance.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- BENEFIT 5 -->
+
+            <article class="benefit-card">
+
+                <div class="benefit-image">
+
+                    <img
+                        src="{% static 'images/ayurveda-benefit-5.jpg' %}"
+                        alt="Ayurvedic nutrition and healthy food"
+                    >
+
+                
+                </div>
+
+                <div class="benefit-content">
+
+                    <div class="benefit-icon">
+                        <i class="fa-solid fa-apple-whole"></i>
+                    </div>
+
+                    <h3>
+                        Healthy Lifestyle
+                    </h3>
+
+                    <p>
+                        Ayurveda encourages mindful food choices,
+                        healthy routines and lifestyle practices
+                        suited to individual needs.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <!-- BENEFIT 6 -->
+
+            <article class="benefit-card">
+
+                <div class="benefit-image">
+
+                    <img
+                        src="{% static 'images/ayurveda-benefit-6.jpg' %}"
+                        alt="Ayurvedic consultation and patient care"
+                    >
+
+                    
+
+                </div>
+
+                <div class="benefit-content">
+
+                    <div class="benefit-icon">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+
+                    <h3>
+                        Personalized Care
+                    </h3>
+
+                    <p>
+                        Ayurvedic care takes an individual-focused
+                        approach, considering personal lifestyle,
+                        constitution and wellness needs.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+        <!-- BOTTOM MESSAGE -->
+
+        <div class="benefits-footer">
+
+            <div class="benefits-footer-icon">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+
+            <div>
+
+                <h3>
+                    Begin Your Journey Towards Natural Wellness 
+                </h3>
+
+                <p>
+                    Discover traditional Ayurvedic care with
+                    compassionate guidance from our experienced
+                    healthcare team.
+                </p>
+
+            </div>
+
+            <a href="#contact" class="benefits-button">
+
+                Contact Us
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}
