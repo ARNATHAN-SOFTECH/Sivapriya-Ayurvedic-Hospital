@@ -1,0 +1,1551 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Ayurvedic Treatments | Sivapriya Ayurveda Hospital
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+:root {
+    --primary: #315d2b;
+    --primary-dark: #1e3d1b;
+    --secondary: #b58b32;
+    --gold: #d4a84f;
+    --cream: #faf7ed;
+    --light-green: #eef5e8;
+    --dark: #1d291d;
+    --text: #4d564b;
+    --white: #ffffff;
+    --shadow: 0 12px 35px rgba(33, 61, 28, 0.12);
+    --radius: 22px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.treatments-page {
+    background: var(--cream);
+    color: var(--text);
+    overflow: hidden;
+}
+
+.container {
+    width: min(1180px, 92%);
+    margin: auto;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.treatments-hero {
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20, 56, 25, 0.95),
+            rgba(49, 93, 43, 0.86)
+        ),
+        url("{% static 'images/januvasti.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.treatments-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(212, 168, 79, 0.28),
+            transparent 30%
+        );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    padding: 80px 0;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #f6d88d;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+.hero-content h1 {
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.05;
+    margin: 0 0 22px;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.hero-content h1 span {
+    color: #f2c96c;
+}
+
+.hero-content p {
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 680px;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 32px;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 14px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--gold);
+    color: #2b311e;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(212,168,79,0.35);
+}
+
+.btn-outline {
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    background: rgba(255,255,255,0.06);
+}
+
+.btn-outline:hover {
+    background: white;
+    color: var(--primary);
+}
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro {
+    padding: 90px 0 55px;
+    text-align: center;
+}
+
+.section-label {
+    color: var(--secondary);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    margin: 0 auto 18px;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--primary-dark);
+    font-size: clamp(32px, 4vw, 48px);
+}
+
+.section-description {
+    max-width: 760px;
+    margin: auto;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* =========================================================
+   FILTER / CATEGORY
+========================================================= */
+
+.category-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px auto 55px;
+}
+
+.category-nav a {
+    text-decoration: none;
+    color: var(--primary);
+    border: 1px solid rgba(49,93,43,0.22);
+    padding: 10px 17px;
+    border-radius: 30px;
+    background: white;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.category-nav a:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* =========================================================
+   TREATMENT GRID
+========================================================= */
+
+.treatment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    padding-bottom: 90px;
+}
+
+.treatment-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(49,93,43,0.08);
+    transition: 0.35s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.treatment-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(33, 61, 28, 0.18);
+}
+
+.treatment-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.treatment-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s ease;
+}
+
+.treatment-card:hover .treatment-image img {
+    transform: scale(1.05);
+}
+
+.treatment-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--gold);
+    color: #2d301d;
+    padding: 7px 13px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.treatment-body {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.treatment-body h3 {
+    color: var(--primary-dark);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+    margin: 0 0 12px;
+}
+
+.treatment-body p {
+    line-height: 1.7;
+    margin: 0 0 18px;
+    font-size: 15px;
+}
+
+.treatment-body h4 {
+    color: var(--primary);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 5px 0 12px;
+}
+
+.benefits {
+    padding: 0;
+    margin: 0 0 20px;
+    list-style: none;
+}
+
+.benefits li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 9px;
+    line-height: 1.55;
+    font-size: 14px;
+}
+
+.benefits li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--secondary);
+    font-weight: 900;
+}
+
+.card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 15px;
+    border-top: 1px solid #edf0e8;
+}
+
+.card-footer .btn {
+    padding: 11px 17px;
+    font-size: 13px;
+}
+
+.call-link {
+    color: var(--primary);
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* =========================================================
+   FEATURE SECTION
+========================================================= */
+
+.feature-section {
+    background: var(--primary-dark);
+    color: white;
+    padding: 90px 0;
+}
+
+.feature-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 55px;
+    align-items: center;
+}
+
+.feature-image {
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+.feature-image img {
+    display: block;
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+}
+
+.feature-content .section-label {
+    color: #e8c46d;
+}
+
+.feature-content h2 {
+    color: white;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 4vw, 50px);
+    margin: 0 0 20px;
+}
+
+.feature-content p {
+    line-height: 1.8;
+    color: rgba(255,255,255,0.78);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+}
+
+.feature-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.feature-list li::before {
+    content: "✦";
+    color: #e8c46d;
+    margin-right: 12px;
+}
+
+/* =========================================================
+   PACKAGE SECTION
+========================================================= */
+
+.package-section {
+    padding: 90px 0;
+    background: #f5f7ef;
+}
+
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 45px;
+}
+
+.package-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid #e5eadf;
+    box-shadow: 0 10px 30px rgba(32,56,29,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.package-card.featured {
+    border: 2px solid var(--gold);
+    transform: translateY(-8px);
+}
+
+.package-card.featured::before {
+    content: "POPULAR";
+    position: absolute;
+    top: 16px;
+    right: -34px;
+    background: var(--gold);
+    color: #2c321e;
+    padding: 6px 40px;
+    font-size: 10px;
+    font-weight: 900;
+    transform: rotate(45deg);
+}
+
+.package-card h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--primary-dark);
+    font-size: 26px;
+    margin: 0 0 8px;
+}
+
+.package-price {
+    color: var(--secondary);
+    font-size: 31px;
+    font-weight: 900;
+    margin: 15px 0 20px;
+}
+
+.package-price span {
+    font-size: 14px;
+    color: #777;
+    font-weight: 500;
+}
+
+.package-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.package-items li {
+    padding: 9px 0;
+    border-bottom: 1px solid #edf0e8;
+    font-size: 14px;
+}
+
+.package-items li::before {
+    content: "•";
+    color: var(--secondary);
+    font-weight: 900;
+    margin-right: 9px;
+}
+
+/* =========================================================
+   WELLNESS SECTION
+========================================================= */
+
+.wellness-section {
+    padding: 90px 0;
+}
+
+.wellness-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+.wellness-card {
+    background: white;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 45% 55%;
+}
+
+.wellness-card img {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    object-fit: cover;
+}
+
+.wellness-content {
+    padding: 28px;
+}
+
+.wellness-content h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--primary-dark);
+    font-size: 27px;
+    margin: 0 0 12px;
+}
+
+.wellness-content p {
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .treatment-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .package-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .package-card.featured {
+        transform: none;
+    }
+
+    .feature-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-image img {
+        height: 450px;
+    }
+
+    .wellness-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .treatments-hero {
+        min-height: 580px;
+    }
+
+    .hero-content {
+        padding: 60px 0;
+    }
+
+    .hero-content h1 {
+        font-size: 43px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+
+    .treatment-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .treatment-image {
+        height: 270px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .container {
+        width: 94%;
+    }
+
+    .treatment-body {
+        padding: 20px;
+    }
+
+    .treatment-body h3 {
+        font-size: 24px;
+    }
+
+    .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .card-footer .btn {
+        width: 100%;
+    }
+
+    .call-link {
+        text-align: center;
+    }
+}
+
+</style>
+
+
+<div class="treatments-page">
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="treatments-hero">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    ✦ Traditional Ayurvedic Care
+                </div>
+
+                <h1>
+                    Healing Through
+                    <span>Ayurveda</span>
+                </h1>
+
+                <p>
+                    Discover traditional Ayurvedic therapies and
+                    rejuvenation treatments at Sivapriya Ayurveda Hospital.
+                    Our treatments are designed to support natural healing,
+                    relaxation, mobility and overall well-being.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i>
+                        OP Registration
+                    </a>
+
+                   
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INTRO
+    ====================================================== -->
+
+    <section class="intro" id="treatments">
+
+        <div class="container">
+
+            <div class="section-label">
+                Sivapriya Ayurveda Hospital
+            </div>
+
+            <h2 class="section-title">
+                Ayurvedic Treatments & Therapies
+            </h2>
+
+            <p class="section-description">
+                Explore our range of Ayurvedic therapies including
+                Vasti treatments, rejuvenation therapies, massage,
+                Kizhi, Steam, postnatal care and specialized wellness
+                programs.
+            </p>
+
+            <div class="category-nav">
+
+                <a href="#specialized">Specialized Care</a>
+                <a href="#rejuvenation">Rejuvenation</a>
+                <a href="#postnatal">Postnatal Care</a>
+                <a href="#wellness">Wellness</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SPECIALIZED TREATMENTS
+    ====================================================== -->
+
+    <section class="container" id="specialized">
+
+        <div class="treatment-grid">
+
+
+            <!-- JANU VASTI -->
+
+            <article class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img
+                        src="{% static 'images/januvasti.jpg' %}"
+                        alt="Janu Vasti Ayurvedic treatment"
+                        loading="lazy"
+                    >
+
+                    <span class="treatment-tag">
+                        Joint Care
+                    </span>
+
+                </div>
+
+                <div class="treatment-body">
+
+                    <h3>Janu Vasti</h3>
+
+                    <p>
+                        A traditional Ayurvedic therapy focused on the
+                        knee joints using warm medicated oil retained
+                        over the affected area.
+                    </p>
+
+                    <h4>Benefits</h4>
+
+                    <ul class="benefits">
+
+                        <li>
+                            Relieves pain and stiffness in the knee joints
+                        </li>
+
+                        <li>
+                            Nourishes and strengthens joint tissues
+                        </li>
+
+                        <li>
+                            Effective in osteoarthritis and chronic knee pain
+                        </li>
+
+                        <li>
+                            Improves flexibility and mobility
+                        </li>
+
+                        <li>
+                            Balances Vata and enhances circulation
+                        </li>
+
+                    </ul>
+
+                    <div class="card-footer">
+
+                        
+
+                        <a
+                            href="tel:9447647612"
+                            class="btn btn-primary"
+                        >
+                            Book Appointment
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- KATI VASTI -->
+
+            <article class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img
+                        src="{% static 'images/kativasti.jpg' %}"
+                        alt="Kati Vasti Ayurvedic lower back treatment"
+                        loading="lazy"
+                    >
+
+                    <span class="treatment-tag">
+                        Spine & Back
+                    </span>
+
+                </div>
+
+                <div class="treatment-body">
+
+                    <h3>Kati Vasti</h3>
+
+                    <p>
+                        Warm medicated oil is retained over the lower
+                        back using a specially prepared herbal dough ring.
+                    </p>
+
+                    <h4>Benefits</h4>
+
+                    <ul class="benefits">
+
+                        <li>
+                            Nourishes and strengthens spinal muscles
+                        </li>
+
+                        <li>
+                            Relieves stiffness, pain and inflammation
+                        </li>
+
+                        <li>
+                            Effective in lumbar spondylosis
+                        </li>
+
+                        <li>
+                            Helpful for sciatica and disc-related problems
+                        </li>
+
+                        <li>
+                            Balances Vata dosha and improves flexibility
+                        </li>
+
+                        <li>
+                            Promotes relaxation and mobility
+                        </li>
+
+                    </ul>
+
+                    <div class="card-footer">
+
+                        
+
+                        <a
+                            href="tel:9447647612"
+                            class="btn btn-primary"
+                        >
+                            Book Appointment
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- GREEVA VASTI -->
+
+            <article class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img
+                        src="{% static 'images/greevavasti.jpg' %}"
+                        alt="Greeva Vasti Ayurvedic neck therapy"
+                        loading="lazy"
+                    >
+
+                    <span class="treatment-tag">
+                        Neck Care
+                    </span>
+
+                </div>
+
+                <div class="treatment-body">
+
+                    <h3>Greeva Vasti</h3>
+
+                    <p>
+                        A localized Ayurvedic therapy for the neck region,
+                        traditionally using warm medicated oil retained
+                        over the affected area.
+                    </p>
+
+                    <h4>Benefits</h4>
+
+                    <ul class="benefits">
+
+                        <li>
+                            Supports relaxation of neck muscles
+                        </li>
+
+                        <li>
+                            Helps reduce neck stiffness and discomfort
+                        </li>
+
+                        <li>
+                            Supports mobility of the cervical region
+                        </li>
+
+                        <li>
+                            Traditionally used as part of Ayurvedic
+                            cervical-care programs
+                        </li>
+
+                        <li>
+                            Supports circulation around the treated area
+                        </li>
+
+                    </ul>
+
+                    <div class="card-footer">
+
+                        
+
+                        <a
+                            href="tel:9447647612"
+                            class="btn btn-primary"
+                        >
+                            Book Appointment
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- MASSAGE KIZHI STEAM -->
+
+            <article class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img
+                        src="{% static 'images/massage-kizhi.jpg' %}"
+                        alt="Massage Kizhi Steam Ayurvedic therapy"
+                        loading="lazy"
+                    >
+
+                    <span class="treatment-tag">
+                        Rejuvenation
+                    </span>
+
+                </div>
+
+                <div class="treatment-body">
+
+                    <h3>Massage · Kizhi · Steam</h3>
+
+                    <p>
+                        A traditional Ayurvedic wellness combination
+                        featuring massage, Kizhi and steam therapy.
+                    </p>
+
+                    <h4>Benefits</h4>
+
+                    <ul class="benefits">
+
+                        <li>
+                            Increases circulation
+                        </li>
+
+                        <li>
+                            Supports joint lubrication
+                        </li>
+
+                        <li>
+                            Promotes better sleep
+                        </li>
+
+                        <li>
+                            Helps reduce stress
+                        </li>
+
+                        <li>
+                            Supports relaxation and general wellness
+                        </li>
+
+                    </ul>
+
+                    <div class="card-footer">
+
+                        
+
+                        <a
+                            href="tel:9447647612"
+                            class="btn btn-primary"
+                        >
+                            Book Appointment
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- PSORIASIS -->
+
+            <article class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img
+                        src="{% static 'images/psoriasis.jpg' %}"
+                        alt="Ayurvedic psoriasis care"
+                        loading="lazy"
+                    >
+
+                    <span class="treatment-tag">
+                        Skin Care
+                    </span>
+
+                </div>
+
+                <div class="treatment-body">
+
+                    <h3>Psoriasis Care</h3>
+
+                    <p>
+                        Ayurvedic skin-care support focused on understanding
+                        the individual condition and providing a personalized
+                        treatment approach.
+                    </p>
+
+                    <h4>Focus</h4>
+
+                    <ul class="benefits">
+
+                        <li>
+                            Ayurvedic assessment of the condition
+                        </li>
+
+                        <li>
+                            Individualized treatment planning
+                        </li>
+
+                        <li>
+                            Natural and traditional Ayurvedic approaches
+                        </li>
+
+                        <li>
+                            Lifestyle and wellness guidance
+                        </li>
+
+                    </ul>
+
+                    <div class="card-footer">
+
+                        
+
+                        <a
+                            href="tel:9447647612"
+                            class="btn btn-primary"
+                        >
+                            Book Appointment
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- ALOPECIA -->
+
+            <article class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img
+                        src="{% static 'images/alopecia.jpg' %}"
+                        alt="Ayurvedic Alopecia care"
+                        loading="lazy"
+                    >
+
+                    <span class="treatment-tag">
+                        Hair & Scalp
+                    </span>
+
+                </div>
+
+                <div class="treatment-body">
+
+                    <h3>Alopecia Care</h3>
+
+                    <p>
+                        Ayurvedic care focusing on the underlying factors
+                        associated with hair loss rather than addressing
+                        symptoms alone.
+                    </p>
+
+                    <h4>Focus</h4>
+
+                    <ul class="benefits">
+
+                        <li>
+                            Focus on identifying underlying causes
+                        </li>
+
+                        <li>
+                            Personalized Ayurvedic assessment
+                        </li>
+
+                        <li>
+                            Traditional scalp and hair-care therapies
+                        </li>
+
+                        <li>
+                            Individual treatment planning
+                        </li>
+
+                    </ul>
+
+                    <div class="card-footer">
+
+                        
+
+                        <a
+                            href="tel:9447647612"
+                            class="btn btn-primary"
+                        >
+                            Book Appointment
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRANA PUNARJANI
+    ====================================================== -->
+
+    <section class="package-section" id="rejuvenation">
+
+        <div class="container">
+
+            <div class="section-label">
+                One Day Rejuvenation
+            </div>
+
+            <h2 class="section-title">
+                Prana Punarjani
+            </h2>
+
+            <p class="section-description">
+                A one-day rejuvenation program combining traditional
+                Ayurvedic wellness therapies.
+            </p>
+
+
+            <div class="package-grid">
+
+
+                <!-- ₹1500 -->
+
+                <div class="package-card">
+
+                    <h3>Prana Punarjani</h3>
+
+                    <div class="package-price">
+                        ₹1500/-
+                    </div>
+
+                    <ul class="package-items">
+
+                        <li>Full Body Massage</li>
+                        <li>Steam Box</li>
+                        <li>Chukku Kappi</li>
+
+                    </ul>
+
+                    <br>
+
+                    <a
+                        href="tel:9447647612"
+                        class="btn btn-primary"
+                    >
+                        Book Now
+                    </a>
+
+                </div>
+
+
+                <!-- ₹2500 -->
+
+                <div class="package-card featured">
+
+                    <h3>Prana Punarjani</h3>
+
+                    <div class="package-price">
+                        ₹2500/-
+                    </div>
+
+                    <ul class="package-items">
+
+                        <li>Head Massage</li>
+                        <li>Face Massage</li>
+                        <li>Full Body Massage</li>
+                        <li>Padabhyangam</li>
+                        <li>Steam Box</li>
+                        <li>Chukku Kappi</li>
+
+                    </ul>
+
+                    <br>
+
+                    <a
+                        href="tel:9447647612"
+                        class="btn btn-primary"
+                    >
+                        Book Now
+                    </a>
+
+                </div>
+
+
+                <!-- ₹5000 -->
+
+                <div class="package-card">
+
+                    <h3>Prana Punarjani</h3>
+
+                    <div class="package-price">
+                        ₹5000/-
+                    </div>
+
+                    <ul class="package-items">
+
+                        <li>Head Massage</li>
+                        <li>Face Massage</li>
+                        <li>Full Body Massage</li>
+                        <li>Padabhyangam</li>
+                        <li>Steam Box</li>
+                        <li>Lepam</li>
+                        <li>Sirodhara</li>
+                        <li>Hair Pack</li>
+                        <li>Dhoomapanam</li>
+                        <li>Keshadhoopanam</li>
+                        <li>Chukku Kappi</li>
+                        <li>Food</li>
+
+                    </ul>
+
+                    <br>
+
+                    <a
+                        href="tel:9447647612"
+                        class="btn btn-primary"
+                    >
+                        Book Now
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRASAVARAKSHA
+    ====================================================== -->
+
+    <section class="feature-section" id="postnatal">
+
+        <div class="container">
+
+            <div class="feature-wrapper">
+
+                <div class="feature-image">
+
+                    <img
+                        src="{% static 'images/prasavaraksha.jpg' %}"
+                        alt="Prasavaraksha Ayurvedic postnatal care"
+                        loading="lazy"
+                    >
+
+                </div>
+
+                <div class="feature-content">
+
+                    <div class="section-label">
+                        Postnatal Ayurvedic Care
+                    </div>
+
+                    <h2>
+                        Prasavaraksha
+                    </h2>
+
+                    <p>
+                        Sivapriya Ayurveda Hospital offers traditional
+                        postnatal wellness support through carefully
+                        selected Ayurvedic therapies and rejuvenation
+                        practices.
+                    </p>
+
+                    <ul class="feature-list">
+
+                        <li>
+                            Improves maternal strength
+                        </li>
+
+                        <li>
+                            Supports mental well-being
+                        </li>
+
+                        <li>
+                            Improves digestion
+                        </li>
+
+                        <li>
+                            Enhances blood circulation
+                        </li>
+
+                        <li>
+                            Reduces pigmentation
+                        </li>
+
+                    </ul>
+
+                    <a
+                        href="tel:9447647612"
+                        class="btn btn-primary"
+                    >
+                        Book Consultation
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRASAVARAKSHA PACKAGES
+    ====================================================== -->
+
+    <section class="package-section">
+
+        <div class="container">
+
+            <div class="section-label">
+                Prasavaraksha Packages
+            </div>
+
+            <h2 class="section-title">
+                Postnatal Wellness Packages
+            </h2>
+
+            <p class="section-description">
+                Package combinations shown in the Sivapriya Ayurveda
+                Hospital promotional material.
+            </p>
+
+
+            <div class="package-grid">
+
+
+                <!-- 3000 -->
+
+                <div class="package-card">
+
+                    <h3>Prasavaraksha</h3>
+
+                    <div class="package-price">
+                        ₹3000/-
+                    </div>
+
+                    <ul class="package-items">
+
+                        <li>Full Body Massage</li>
+                        <li>Kizhi</li>
+                        <li>Steam</li>
+                        <li>Vedukuli</li>
+                        <li>Tummy Tying</li>
+                        <li>Dhoomam</li>
+
+                    </ul>
+
+                    <br>
+
+                    <a
+                        href="tel:9447647612"
+                        class="btn btn-primary"
+                    >
+                        Book Now
+                    </a>
+
+                </div>
+
+
+                <!-- 3500 -->
+
+                <div class="package-card featured">
+
+                    <h3>Prasavaraksha</h3>
+
+                    <div class="package-price">
+                        ₹3500/-
+                    </div>
+
+                    <ul class="package-items">
+
+                        <li>Full Body Massage</li>
+                        <li>Kizhi</li>
+                        <li>Steam</li>
+                        <li>Padabhyangam</li>
+                        <li>Foot Massage</li>
+                        <li>Full Body Pack</li>
+                        <li>Vedukuli</li>
+                        <li>Tummy Tying</li>
+                        <li>Dhoomam</li>
+
+                    </ul>
+
+                    <br>
+
+                    <a
+                        href="tel:9447647612"
+                        class="btn btn-primary"
+                    >
+                        Book Now
+                    </a>
+
+                </div>
+
+
+                <!-- 4000 -->
+
+                <div class="package-card">
+
+                    <h3>Prasavaraksha</h3>
+
+                    <div class="package-price">
+                        ₹4000/-
+                    </div>
+
+                    <ul class="package-items">
+
+                        <li>Full Body Massage</li>
+                        <li>Kizhi</li>
+                        <li>Steam</li>
+                        <li>Face & Neck Massage</li>
+                        <li>Head Massage</li>
+                        <li>Padabhyangam</li>
+                        <li>Foot Massage</li>
+                        <li>Full Body Pack</li>
+                        <li>Vedukuli</li>
+                        <li>Tummy Tying</li>
+                        <li>Dhoomam</li>
+
+                    </ul>
+
+                    <br>
+
+                    <a
+                        href="tel:9447647612"
+                        class="btn btn-primary"
+                    >
+                        Book Now
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+ 
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SMOOTH SCROLL
+========================================================= */
+
+document.querySelectorAll(
+    '.category-nav a, .hero-buttons a[href^="#"]'
+).forEach(function(link) {
+
+    link.addEventListener("click", function(e) {
+
+        const target = document.querySelector(
+            this.getAttribute("href")
+        );
+
+        if (target) {
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}
