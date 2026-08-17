@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.doctors-section{
+    padding:80px 0;
+    background:#f8faf8;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.section-title h2{
+    font-size:42px;
+    font-weight:700;
+    color:#0b6b4b;
+}
+
+.section-title p{
+    color:#666;
+    max-width:700px;
+    margin:auto;
+}
+
+.doctor-card{
+    background:#fff;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    transition:.3s;
+    text-align:center;
+    padding:25px;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.doctor-card:hover{
+    transform:translateY(-8px);
+}
+
+.doctor-image{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    margin:0 auto 20px;
+    border:4px solid #e8f6ef;
+    display:block;
+}
+
+.doctor-body{
+    padding:0;
+}
+
+.doctor-name{
+    font-size:24px;
+    font-weight:700;
+    color:#123;
+}
+
+.doctor-speciality{
+    color:#0b6b4b;
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.profile-btn{
+    display:inline-block;
+    background:#0b6b4b;
+    color:white;
+    padding:12px 25px;
+    border-radius:30px;
+    text-decoration:none;
+    margin-top:15px;
+}
+
+</style>
+
+<section class="doctors-section">
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Our Expert Doctors</h2>
+            <p>
+                Meet our experienced Ayurvedic specialists dedicated
+                to your health and wellness.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            {% for doctor in doctors %}
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+
+                <div class="doctor-card">
+
+                    <img src="{{ doctor.image.url }}"
+                         class="doctor-image"
+                         alt="{{ doctor.name }}">
+
+                    <div class="doctor-body">
+
+                        <h4 class="doctor-name">
+                            {{ doctor.name }}
+                        </h4>
+
+                        <div class="doctor-speciality">
+                            {{ doctor.specialization }}
+                        </div>
+
+                        <p>{{ doctor.qualification }}</p>
+
+                        <p>
+                            {{ doctor.experience }}
+                            Years Experience
+                        </p>
+
+                        <strong>
+                            ₹{{ doctor.consultation_fee }}
+                        </strong>
+
+                        <br>
+
+                        <a href="{% url 'doctor_detail' doctor.slug %}"
+                           class="profile-btn">
+                            View Profile
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

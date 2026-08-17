@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ doctor.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row">
+
+        <!-- Doctor Image -->
+        <div class="col-lg-4 mb-4">
+            <div class="card border-0 shadow-sm">
+                <img src="{{ doctor.image.url }}"
+                     alt="{{ doctor.name }}"
+                     class="img-fluid rounded">
+            </div>
+        </div>
+
+        <!-- Doctor Details -->
+        <div class="col-lg-8">
+
+            <h1 class="mb-2">{{ doctor.name }}</h1>
+
+            <h5 class="text-success mb-3">
+                {{ doctor.specialization }}
+            </h5>
+
+            <div class="row mb-4">
+
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <strong>Qualification</strong>
+                            <p class="mb-0">{{ doctor.qualification }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <strong>Experience</strong>
+                            <p class="mb-0">
+                                {{ doctor.experience }} Years
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h4>About Doctor</h4>
+                    <p>
+                        {{ doctor.description|linebreaks }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h4>Consultation Information</h4>
+
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <strong>Consultation Fee:</strong>
+                            ₹{{ doctor.consultation_fee }}
+                        </li>
+
+                        <li>
+                            <strong>Status:</strong>
+
+                            {% if doctor.available %}
+                                <span class="text-success">
+                                    Available
+                                </span>
+                            {% else %}
+                                <span class="text-danger">
+                                    Not Available
+                                </span>
+                            {% endif %}
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <a href="#"
+               class="btn btn-success btn-lg">
+                Book Appointment
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
