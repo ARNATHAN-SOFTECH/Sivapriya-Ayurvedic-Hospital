@@ -1,0 +1,672 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    About Us | Sivapriya Ayurveda Hospital
+{% endblock %}
+
+{% block content %}
+
+<style>
+    /* =========================================================
+       ABOUT PAGE
+    ========================================================= */
+
+    .about-page {
+        font-family: "Poppins", sans-serif;
+        color: #333;
+        background: #fffdf7;
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .about-hero {
+        position: relative;
+        min-height: 430px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                rgba(23, 65, 38, 0.82),
+                rgba(23, 65, 38, 0.82)
+            ),
+            url("{% static 'images/ayurveda-leaves.jpg' %}") center/cover no-repeat;
+    }
+
+    .about-hero-content {
+        max-width: 850px;
+        padding: 40px 20px;
+        color: white;
+        position: relative;
+        z-index: 2;
+    }
+
+    .about-hero-icon {
+        font-size: 42px;
+        color: #d4af37;
+        margin-bottom: 12px;
+    }
+
+    .about-hero h1 {
+        font-size: 52px;
+        margin: 0 0 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .about-hero p {
+        font-size: 20px;
+        line-height: 1.8;
+        margin: 0 auto;
+        max-width: 720px;
+        color: #f8f4df;
+    }
+
+    /* =========================================================
+       INTRODUCTION
+    ========================================================= */
+
+    .about-intro {
+        padding: 85px 20px;
+        background: #fffdf7;
+    }
+
+    .about-container {
+        width: 90%;
+        max-width: 1150px;
+        margin: auto;
+    }
+
+    .about-intro-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .about-image-wrapper {
+        position: relative;
+    }
+
+    .about-main-image {
+        width: 100%;
+        height: 470px;
+        object-fit: cover;
+        border-radius: 25px;
+        display: block;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .experience-badge {
+        position: absolute;
+        right: -25px;
+        bottom: 30px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: #d4af37;
+        color: #173f27;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        border: 6px solid #fffdf7;
+    }
+
+    .experience-badge strong {
+        font-size: 34px;
+        line-height: 1;
+        font-weight: 800;
+    }
+
+    .experience-badge span {
+        font-size: 13px;
+        font-weight: 700;
+        margin-top: 7px;
+        text-transform: uppercase;
+    }
+
+    .about-label {
+        display: inline-block;
+        color: #8b711d;
+        background: #f7efd1;
+        padding: 7px 16px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    .about-intro h2 {
+        font-size: 38px;
+        line-height: 1.25;
+        color: #174126;
+        margin: 0 0 20px;
+        font-weight: 700;
+    }
+
+    .about-intro h2 span {
+        color: #b18a20;
+    }
+
+    .about-intro p {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #666;
+        margin-bottom: 18px;
+    }
+
+    .about-highlight {
+        margin-top: 25px;
+        padding: 20px 24px;
+        border-left: 4px solid #d4af37;
+        background: #f8f4e5;
+        border-radius: 0 12px 12px 0;
+    }
+
+    .about-highlight p {
+        margin: 0;
+        color: #3d4b40;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    /* =========================================================
+       PHILOSOPHY
+    ========================================================= */
+
+    .philosophy-section {
+        padding: 85px 20px;
+        background: #174126;
+        color: white;
+        text-align: center;
+    }
+
+    .section-title {
+        max-width: 800px;
+        margin: 0 auto 50px;
+    }
+
+    .section-title .small-title {
+        color: #d4af37;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+    }
+
+    .section-title h2 {
+        font-size: 38px;
+        margin: 10px 0 15px;
+        font-weight: 700;
+    }
+
+    .section-title p {
+        color: #71736e;
+        font-size: 16px;
+        line-height: 1.8;
+    }
+
+    .philosophy-grid {
+        width: 90%;
+        max-width: 1150px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    .philosophy-card {
+        padding: 35px 25px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .philosophy-card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.13);
+    }
+
+    .philosophy-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #e7c555;
+        color: #174126;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 27px;
+    }
+
+    .philosophy-card h3 {
+        font-size: 21px;
+        margin-bottom: 12px;
+    }
+
+    .philosophy-card p {
+        color: #d7e0d8;
+        line-height: 1.7;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    /* =========================================================
+       VALUES
+    ========================================================= */
+
+    .values-section {
+        padding: 85px 20px;
+        background: #fffdf7;
+    }
+
+    .values-grid {
+        width: 90%;
+        max-width: 1150px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+    }
+
+    .value-card {
+        background: white;
+        padding: 30px 20px;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+        border-bottom: 3px solid #d4af37;
+        transition: 0.3s ease;
+    }
+
+    .value-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .value-card i {
+        font-size: 30px;
+        color: #174126;
+        margin-bottom: 15px;
+    }
+
+    .value-card h3 {
+        font-size: 18px;
+        color: #174126;
+        margin: 0 0 10px;
+    }
+
+    .value-card p {
+        font-size: 14px;
+        color: #777777;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 992px) {
+
+        .about-intro-grid {
+            grid-template-columns: 1fr;
+            gap: 45px;
+        }
+
+        .about-main-image {
+            height: 400px;
+        }
+
+        .experience-badge {
+            right: 20px;
+        }
+
+        .philosophy-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .values-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+
+        .about-hero {
+            min-height: 380px;
+        }
+
+        .about-hero h1 {
+            font-size: 36px;
+        }
+
+        .about-hero p {
+            font-size: 16px;
+        }
+
+        .about-intro {
+            padding: 60px 15px;
+        }
+
+        .about-intro h2 {
+            font-size: 30px;
+        }
+
+        .about-main-image {
+            height: 330px;
+        }
+
+        .experience-badge {
+            width: 120px;
+            height: 120px;
+            right: 10px;
+            bottom: 20px;
+        }
+
+        .experience-badge strong {
+            font-size: 27px;
+        }
+
+        .values-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-title h2,
+        .about-cta h2 {
+            font-size: 30px;
+        }
+    }
+</style>
+
+
+<div class="about-page">
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="about-hero">
+
+        <div class="about-hero-content">
+
+            <div class="about-hero-icon">
+                ☘️
+            </div>
+
+            <h1>About Sivapriya Ayurveda Hospital</h1>
+
+            <p>
+                57 years of healing, tradition and compassionate care.
+                Discover the wisdom of Ayurveda, refined through decades
+                of dedicated service.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         INTRODUCTION
+    ====================================================== -->
+
+    <section class="about-intro">
+
+        <div class="about-container">
+
+            <div class="about-intro-grid">
+
+                <!-- IMAGE -->
+
+                <div class="about-image-wrapper">
+
+                    <img
+                        src="{% static 'images/ayurveda-about.png' %}"
+                        alt="Sivapriya Ayurveda Hospital"
+                        class="about-main-image"
+                    >
+
+                    <div class="experience-badge">
+                        <strong>57</strong>
+                        <span>Years of<br>Healing</span>
+                    </div>
+
+                </div>
+
+
+                <!-- CONTENT -->
+
+                <div class="about-content">
+
+                    <span class="about-label">
+                        Our Story
+                    </span>
+
+                    <h2>
+                        Wellness Begins <span>Within</span>
+                    </h2>
+
+                    <p>
+                        At <strong>Sivapriya Ayurveda Hospital</strong>,
+                        we believe that true wellness begins within.
+                        Our approach to healing is deeply rooted in the
+                        timeless wisdom of Ayurveda and strengthened by
+                        years of dedicated patient care.
+                    </p>
+
+                    <p>
+                        For over five decades, we have remained committed
+                        to preserving the principles of traditional
+                        Ayurveda while providing compassionate and
+                        personalized care to every patient who walks
+                        through our doors.
+                    </p>
+
+                    <p>
+                        Our journey of <strong>57 years of healing</strong>
+                        reflects a tradition built on trust, knowledge,
+                        care and a deep respect for the natural healing
+                        processes of the body and mind.
+                    </p>
+
+                    <div class="about-highlight">
+
+                        <p>
+                            ☘️ Rooted in ancient wisdom, refined by years
+                            of care — our mission is to help every patient
+                            move towards a healthier and more balanced life.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         OUR PHILOSOPHY
+    ====================================================== -->
+
+    <section class="philosophy-section">
+
+        <div class="section-title">
+
+            <span class="small-title">
+                Our Philosophy
+            </span>
+
+            <h2>
+                The Ayurvedic Way of Healing
+            </h2>
+
+            <p>
+                Ayurveda views health as a balance between the body,
+                mind and inner wellbeing. Our care is guided by this
+                holistic understanding of health.
+            </p>
+
+        </div>
+
+
+        <div class="philosophy-grid">
+
+            <div class="philosophy-card">
+
+                <div class="philosophy-icon">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+                <h3>Natural Healing</h3>
+
+                <p>
+                    We follow the principles of Ayurveda and emphasize
+                    natural approaches that support the body's own
+                    healing processes.
+                </p>
+
+            </div>
+
+
+            <div class="philosophy-card">
+
+                <div class="philosophy-icon">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <h3>Compassionate Care</h3>
+
+                <p>
+                    Every patient deserves to be heard, understood and
+                    cared for with patience, respect and compassion.
+                </p>
+
+            </div>
+
+
+            <div class="philosophy-card">
+
+                <div class="philosophy-icon">
+                    <i class="fa-solid fa-spa"></i>
+                </div>
+
+                <h3>Holistic Wellness</h3>
+
+                <p>
+                    We look beyond individual symptoms and focus on
+                    supporting overall physical, mental and emotional
+                    wellbeing.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         OUR VALUES
+    ====================================================== -->
+
+    <section class="values-section">
+
+        <div class="section-title">
+
+            <span class="small-title">
+                What We Stand For
+            </span>
+
+            <h2>
+                Our Core Values
+            </h2>
+
+            <p>
+                Our values guide the way we serve our patients and
+                preserve the timeless principles of Ayurveda.
+            </p>
+
+        </div>
+
+
+        <div class="values-grid">
+
+            <div class="value-card">
+
+                <i class="fa-solid fa-seedling"></i>
+
+                <h3>Tradition</h3>
+
+                <p>
+                    Respecting and preserving the knowledge passed
+                    down through generations of Ayurveda.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+                <h3>Expertise</h3>
+
+                <p>
+                    Combining Ayurvedic knowledge with years of
+                    practical experience in patient care.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <i class="fa-solid fa-hand-holding-heart"></i>
+
+                <h3>Care</h3>
+
+                <p>
+                    Providing every patient with personalized,
+                    respectful and compassionate attention.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <i class="fa-solid fa-shield-heart"></i>
+
+                <h3>Trust</h3>
+
+                <p>
+                    Building lasting relationships with our patients
+                    through honest and dedicated service.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}
