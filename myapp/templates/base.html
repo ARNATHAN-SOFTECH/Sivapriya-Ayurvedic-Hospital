@@ -948,16 +948,18 @@
             Contact
         </a>
 
-            <a href="{% url 'treatments' %}">
+            <a class="nav-link {% if 'treatments' in request.path %}active{% endif %}"
+                href="{% url 'treatments' %}">
             <i class="fa-solid fa-leaf"></i>
             Treatments
         </a>
 
             <a class="nav-link {% if 'doctors' in request.path %}active{% endif %}"
-       href="{% url 'doctors' %}">
+                href="{% url 'doctors' %}">
             <i class="fa-solid fa-user-doctor"></i>
             Doctors
         </a>
+
         <div class="nav-profile">
             <a href="#">
             <i class="fa-solid fa-user-shield"></i>
@@ -1071,7 +1073,7 @@
 
                     <h4>Quick Links</h4>
 
-                    <a href="#">
+                    <a href="{% url 'gallery' %}">
                         Gallery
                     </a>
 
