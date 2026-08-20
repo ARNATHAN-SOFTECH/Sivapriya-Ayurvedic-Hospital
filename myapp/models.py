@@ -38,3 +38,33 @@ class Gallery(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class FAQCategory(models.Model):
+    name = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'name']
+        verbose_name_plural = "FAQ Categories"
+
+    def __str__(self):
+        return self.name
+
+
+class FAQ(models.Model):
+    category = models.ForeignKey(
+        FAQCategory,
+        on_delete=models.CASCADE,
+        related_name='faqs'
+    )
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.question

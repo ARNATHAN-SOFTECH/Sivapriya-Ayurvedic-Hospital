@@ -1,6 +1,15 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Doctor
 from .models import Gallery
+from .models import FAQCategory
+
+
+def faq(request):
+    categories = FAQCategory.objects.prefetch_related('faqs').all()
+
+    return render(request, 'faq.html', {
+        'categories': categories
+    })
 
 def gallery(request):
     images = Gallery.objects.all().order_by('-created_at')
