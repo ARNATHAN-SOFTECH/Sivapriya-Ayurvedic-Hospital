@@ -3,82 +3,216 @@
 {% block content %}
 
 <style>
+
+/* ==============================
+   CONTACT SECTION
+============================== */
+
 .contact-section{
     padding:80px 0;
     background:#f8faf8;
 }
 
-.page-title{
+/* ==============================
+   PAGE HEADER
+============================== */
+
+.section-title{
     text-align:center;
-    margin-bottom:50px;
+    margin-bottom:55px;
 }
 
-.page-title h2{
-    color:#0b6b4b;
+.section-title h2{
+    font-size:42px;
     font-weight:700;
+    color:var(--primary-dark);
+    margin-bottom:12px;
 }
+
+.section-title p{
+    color:#666;
+    font-size:16px;
+    max-width:650px;
+    margin:auto;
+    line-height:1.7;
+}
+
+/* ==============================
+   CONTACT CARDS
+============================== */
 
 .contact-card{
     background:#fff;
     border-radius:20px;
     padding:35px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
     height:100%;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    border:1px solid #edf2ee;
+    transition:all .3s ease;
+}
+
+.contact-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 30px rgba(0,0,0,.10);
 }
 
 .contact-card h4{
-    color:#0b6b4b;
-    margin-bottom:25px;
+    color:var(--primary-dark);
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:30px;
 }
+
+/* ==============================
+   CONTACT INFORMATION
+============================== */
 
 .contact-info{
-    margin-bottom:20px;
+    display:flex;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:24px;
+    color:#555;
+    line-height:1.7;
+    font-size:15px;
 }
 
-.contact-info i{
-    color:#0b6b4b;
-    width:30px;
+.contact-info-icon{
+    min-width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#e8f5ef;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
+
+.contact-info-icon i{
+    color:#0b6b4b;
+    font-size:17px;
+}
+
+/* ==============================
+   FORM
+============================== */
 
 .contact-form .form-control{
+    border:1px solid #dfe7e2;
     border-radius:10px;
-    padding:12px;
+    padding:13px 15px;
+    font-size:15px;
+    background:#fbfdfb;
+    transition:.3s;
+}
+
+.contact-form .form-control:focus{
+    border-color:#0b6b4b;
+    box-shadow:0 0 0 3px rgba(11,107,75,.10);
+    background:#fff;
+}
+
+.contact-form textarea{
+    resize:none;
 }
 
 .submit-btn{
     background:#0b6b4b;
-    color:white;
+    color:#fff;
     border:none;
-    padding:12px 30px;
+    padding:13px 32px;
     border-radius:30px;
+    font-weight:600;
+    transition:.3s;
 }
 
 .submit-btn:hover{
     background:#08543b;
+    transform:translateY(-2px);
 }
 
-.map-section{
+/* ==============================
+   MAP
+============================== */
+
+.map-wrapper{
     margin-top:50px;
+}
+
+.map-card{
+    background:#fff;
+    padding:10px;
     border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
     overflow:hidden;
 }
+
+.map-card iframe{
+    width:100%;
+    height:400px;
+    border:0;
+    border-radius:15px;
+    display:block;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media(max-width:768px){
+
+    .contact-section{
+        padding:55px 15px;
+    }
+
+    .section-title h2{
+        font-size:32px;
+    }
+
+    .section-title{
+        margin-bottom:35px;
+    }
+
+    .contact-card{
+        padding:25px;
+    }
+
+    .contact-card h4{
+        font-size:21px;
+    }
+
+    .map-card iframe{
+        height:300px;
+    }
+
+}
+
 </style>
+
 
 <section class="contact-section">
 
     <div class="container">
 
-        <div class="page-title">
+        <!-- PAGE TITLE -->
+
+        <div class="section-title">
+
             <h2>Contact Us</h2>
+
             <p>
-                We are here to help you with appointments,
-                treatments and healthcare services.
+                We are here to assist you with appointments,
+                treatments and all your healthcare needs.
             </p>
+
         </div>
+
 
         <div class="row g-4">
 
-            <!-- Contact Details -->
+
+            <!-- ==============================
+                 HOSPITAL INFORMATION
+            =============================== -->
 
             <div class="col-lg-5">
 
@@ -86,32 +220,77 @@
 
                     <h4>Hospital Information</h4>
 
-                    <div class="contact-info">
-                        <i class="fas fa-map-marker-alt"></i>
-                        Sivapriya Ayurvedic Hospital,Kanyakumari Road, opposite Spinning Mill, Salem, Chathannoor, Kerala
-                    </div>
 
                     <div class="contact-info">
-                        <i class="fas fa-phone"></i>
-                        +91 474 259 5151
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+
+                        <div>
+                            <strong>Address</strong><br>
+
+                            Sivapriya Ayurvedic Hospital,
+                            Kanyakumari Road, Opposite Spinning Mill,
+                            Salem, Chathannoor, Kerala
+                        </div>
+
                     </div>
 
-                    <div class="contact-info">
-                        <i class="fas fa-envelope"></i>
-                        info@sivapriyaayurveda.com
-                    </div>
 
                     <div class="contact-info">
-                        <i class="fas fa-clock"></i>
-                        Monday - Saturday<br>
-                        9:00 AM - 5:00 PM
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+
+                        <div>
+                            <strong>Phone</strong><br>
+
+                            +91 474 259 5151
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-info">
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+
+                        <div>
+                            <strong>Email</strong><br>
+
+                            info@sivapriyaayurveda.com
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-info">
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+
+                        <div>
+                            <strong>Working Hours</strong><br>
+
+                            Monday - Saturday<br>
+                            9:00 AM - 5:00 PM
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
 
-            <!-- Contact Form -->
+
+            <!-- ==============================
+                 CONTACT FORM
+            =============================== -->
 
             <div class="col-lg-7">
 
@@ -119,39 +298,71 @@
 
                     <h4>Send Us a Message</h4>
 
-                    <form method="post">
+
+                    <form method="post" class="contact-form">
+
                         {% csrf_token %}
+
 
                         <div class="row">
 
                             <div class="col-md-6 mb-3">
-                                <input type="text"
-                                       class="form-control"
-                                       placeholder="Your Name">
+
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
+                                    placeholder="Your Name"
+                                    required>
+
                             </div>
+
 
                             <div class="col-md-6 mb-3">
-                                <input type="email"
-                                       class="form-control"
-                                       placeholder="Email Address">
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="Email Address"
+                                    required>
+
                             </div>
 
                         </div>
 
-                        <div class="mb-3">
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="Subject">
-                        </div>
 
                         <div class="mb-3">
-                            <textarea rows="5"
-                                      class="form-control"
-                                      placeholder="Message"></textarea>
+
+                            <input
+                                type="text"
+                                name="subject"
+                                class="form-control"
+                                placeholder="Subject"
+                                required>
+
                         </div>
 
-                        <button class="submit-btn">
+
+                        <div class="mb-3">
+
+                            <textarea
+                                name="message"
+                                rows="6"
+                                class="form-control"
+                                placeholder="Write your message..."
+                                required></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="submit-btn">
+
+                            <i class="fas fa-paper-plane me-2"></i>
                             Send Message
+
                         </button>
 
                     </form>
@@ -162,21 +373,23 @@
 
         </div>
 
-        <!-- Google Map -->
 
-        <div class="map-section mt-5">
+        <!-- ==============================
+             GOOGLE MAP
+        =============================== -->
 
-            <div class="map-section mt-5">
-    <iframe
-        src="https://maps.google.com/maps?q=Sivapriya%20Ayurvedic%20Hospital%20Chathannoor%20Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        width="100%"
-        height="400"
-        style="border:0; border-radius:20px;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-</div>
+        <div class="map-wrapper">
+
+            <div class="map-card">
+
+                <iframe
+                    src="https://maps.google.com/maps?q=Sivapriya%20Ayurvedic%20Hospital%20Chathannoor%20Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+
+            </div>
 
         </div>
 

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block content %}
+
+<style>
+.gallery-section{
+    padding:80px 0;
+    background:#f8faf8;
+}
+
+.gallery-header{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.gallery-header h2{
+    font-size:42px;
+    font-weight:700;
+    color:#1f4b2c;
+    margin-bottom:15px;
+}
+
+.gallery-header p{
+    max-width:700px;
+    margin:auto;
+    color:#6b7280;
+    font-size:17px;
+}
+
+.gallery-card{
+    border:none;
+    border-radius:18px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    transition:all .35s ease;
+    height:100%;
+}
+
+.gallery-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.gallery-image-wrapper{
+    overflow:hidden;
+}
+
+.gallery-image{
+    width:100%;
+    height:280px;
+    object-fit:cover;
+    transition:transform .5s ease;
+}
+
+.gallery-card:hover .gallery-image{
+    transform:scale(1.08);
+}
+
+.gallery-body{
+    padding:20px;
+    text-align:center;
+}
+
+.gallery-body h5{
+    margin:0;
+    font-size:18px;
+    color:#1f4b2c;
+    font-weight:600;
+}
+
+.gallery-badge{
+    display:inline-block;
+    background:#e9f5ec;
+    color:#1f7a3e;
+    font-size:12px;
+    padding:5px 12px;
+    border-radius:30px;
+    margin-top:10px;
+}
+
+@media(max-width:768px){
+
+    .gallery-header h2{
+        font-size:30px;
+    }
+
+    .gallery-image{
+        height:220px;
+    }
+}
+</style>
+
+<section class="gallery-section">
+
+    <div class="container">
+
+        <div class="gallery-header">
+            <h2>Hospital Gallery</h2>
+            <p>
+                Take a glimpse into our hospital facilities,
+                Ayurvedic treatments, wellness programs and
+                healing environment.
+            </p>
+        </div>
+
+        <div class="row">
+
+            {% for image in images %}
+
+            <div class="col-lg-4 col-md-6 mb-4">
+
+                <div class="gallery-card">
+
+                    <div class="gallery-image-wrapper">
+                        <img src="{{ image.image.url }}"
+                             alt="{{ image.title }}"
+                             class="gallery-image">
+                    </div>
+
+                    <div class="gallery-body">
+                        <h5>{{ image.title }}</h5>
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
