@@ -1,0 +1,892 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ blog.title }} | Sivapriya Ayurvedic Hospital
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   BLOG DETAILS PAGE
+========================================================= */
+
+.blog-detail-page {
+    background: #f8f7f2;
+    min-height: 100vh;
+
+    color: #29392f;
+
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   DETAIL HERO
+========================================================= */
+
+.detail-hero {
+    position: relative;
+
+    min-height: 480px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    background:
+        linear-gradient(
+            rgba(15,47,30,.35),
+            rgba(15,47,30,.90)
+        ),
+        url("{% static blog.image %}")
+        center/cover no-repeat;
+}
+
+
+.detail-hero-content {
+    width: min(1000px,92%);
+
+    margin: auto;
+
+    padding: 80px 0 75px;
+
+    color: white;
+}
+
+
+.detail-category {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 15px;
+
+    margin-bottom: 18px;
+
+    border-radius: 50px;
+
+    background: rgba(212,175,55,.95);
+
+    color: #183622;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    font-weight: 700;
+}
+
+
+.detail-hero h1 {
+    max-width: 900px;
+
+    margin: 0 0 20px;
+
+    font-family: Georgia,serif;
+
+    font-size: clamp(36px,5vw,60px);
+
+    line-height: 1.12;
+
+    font-weight: 600;
+
+    color: white;
+}
+
+
+.detail-meta {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    color: rgba(255,255,255,.78);
+
+    font-size: 12px;
+}
+
+
+.detail-meta i {
+    color: #d4af37;
+
+    margin-right: 6px;
+}
+
+
+/* =========================================================
+   CONTENT LAYOUT
+========================================================= */
+
+.detail-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        300px;
+
+    gap: 45px;
+
+    width: min(1000px,92%);
+
+    margin: 65px auto 90px;
+}
+
+
+/* =========================================================
+   ARTICLE
+========================================================= */
+
+.article-content {
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    padding: 45px;
+
+    box-shadow:
+        0 12px 35px rgba(25,54,36,.07);
+}
+
+
+.article-introduction {
+    font-size: 19px;
+
+    color: #45564b;
+
+    line-height: 1.9;
+
+    margin-bottom: 30px;
+
+    font-family: Georgia,serif;
+}
+
+
+.article-content p {
+    color: #626d66;
+
+    font-size: 15px;
+
+    line-height: 1.95;
+
+    margin: 0 0 24px;
+
+    white-space: pre-line;
+}
+
+
+.article-content h2 {
+    color: #1d3a28;
+
+    font-family: Georgia,serif;
+
+    font-size: 28px;
+
+    margin: 35px 0 15px;
+}
+
+
+.article-content h3 {
+    color: #1d3a28;
+
+    font-family: Georgia,serif;
+
+    font-size: 23px;
+
+    margin: 30px 0 13px;
+}
+
+
+/* =========================================================
+   QUOTE
+========================================================= */
+
+.article-quote {
+    margin: 35px 0;
+
+    padding: 25px 30px;
+
+    border-left: 4px solid #d4af37;
+
+    border-radius: 0 15px 15px 0;
+
+    background: #f7f5e9;
+
+    color: #526157;
+
+    font-family: Georgia,serif;
+
+    font-size: 19px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.detail-sidebar {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+.sidebar-card {
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background: white;
+
+    box-shadow:
+        0 10px 30px rgba(25,54,36,.06);
+}
+
+
+.sidebar-card h3 {
+    margin: 0 0 18px;
+
+    color: #1d3a28;
+
+    font-family: Georgia,serif;
+
+    font-size: 21px;
+}
+
+
+.sidebar-card p {
+    color: #6b756e;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-blog {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    border-radius: 50px;
+
+    background: #173d28;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    transition: .3s ease;
+}
+
+
+.back-blog:hover {
+    background: #d4af37;
+
+    color: #17251b;
+
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   RELATED POSTS
+========================================================= */
+
+.related-section {
+    width: min(1000px,92%);
+
+    margin: 0 auto 90px;
+}
+
+
+.related-heading {
+    margin-bottom: 25px;
+}
+
+
+.related-heading span {
+    color: #a27c16;
+
+    text-transform: uppercase;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+}
+
+
+.related-heading h2 {
+    margin: 6px 0 0;
+
+    color: #1d3a28;
+
+    font-family: Georgia,serif;
+
+    font-size: 34px;
+}
+
+
+.related-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 22px;
+}
+
+
+.related-card {
+    overflow: hidden;
+
+    background: white;
+
+    border-radius: 18px;
+
+    border: 1px solid #e5e8e0;
+
+    transition: .3s ease;
+}
+
+
+.related-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 15px 35px rgba(25,54,36,.1);
+}
+
+
+.related-image {
+    height: 170px;
+
+    overflow: hidden;
+}
+
+
+.related-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: .4s ease;
+}
+
+
+.related-card:hover img {
+    transform: scale(1.06);
+}
+
+
+.related-content {
+    padding: 20px;
+}
+
+
+.related-content span {
+    color: #a27c16;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    font-weight: 700;
+}
+
+
+.related-content h3 {
+    margin: 8px 0 15px;
+
+    color: #203a29;
+
+    font-family: Georgia,serif;
+
+    font-size: 20px;
+
+    line-height: 1.35;
+}
+
+
+.related-content a {
+    color: #8d6c12;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.related-content a:hover {
+    color: #173d28;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:850px) {
+
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-sidebar {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .related-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:600px) {
+
+    .detail-hero {
+        min-height: 430px;
+    }
+
+    .detail-hero-content {
+        padding-bottom: 55px;
+    }
+
+    .detail-layout {
+        margin-top: 40px;
+    }
+
+    .article-content {
+        padding: 28px 22px;
+    }
+
+    .article-introduction {
+        font-size: 17px;
+    }
+
+    .article-content p {
+        font-size: 14px;
+    }
+
+    .detail-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .related-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+
+<div class="blog-detail-page">
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="detail-hero">
+
+        <div class="detail-hero-content">
+
+
+            <div class="detail-category">
+
+                <i class="fa-solid fa-leaf"></i>
+
+                {{ blog.category }}
+
+            </div>
+
+
+            <h1>
+
+                {{ blog.title }}
+
+            </h1>
+
+
+            <div class="detail-meta">
+
+                <span>
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    {{ blog.date }}
+
+                </span>
+
+
+                <span>
+
+                    <i class="fa-regular fa-user"></i>
+
+                    {{ blog.author }}
+
+                </span>
+
+
+                <span>
+
+                    <i class="fa-solid fa-leaf"></i>
+
+                    Sivapriya Ayurvedic Hospital
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ARTICLE
+    ====================================================== -->
+
+    <div class="detail-layout">
+
+
+        <main class="article-content">
+
+
+            <p class="article-introduction">
+
+                {{ blog.excerpt }}
+
+            </p>
+
+
+            <p>
+
+                {{ blog.content }}
+
+            </p>
+
+
+            <div class="article-quote">
+
+                "Ayurveda encourages us to understand our
+                individual nature and create a balanced,
+                healthy and mindful way of living."
+
+            </div>
+
+
+            <h2>
+
+                A Holistic Approach to Wellbeing
+
+            </h2>
+
+
+            <p>
+
+                Ayurveda looks at health from a holistic
+                perspective. Rather than focusing only on
+                individual symptoms, traditional Ayurvedic
+                approaches consider lifestyle, diet, daily
+                routines and overall balance.
+
+            </p>
+
+
+            <h3>
+
+                Traditional Wisdom for Modern Life
+
+            </h3>
+
+
+            <p>
+
+                Incorporating healthy Ayurvedic principles
+                into everyday life can be as simple as
+                maintaining regular routines, choosing
+                nourishing foods, getting adequate rest and
+                making time for relaxation.
+
+            </p>
+
+
+            <h3>
+
+                Personalized Care
+
+            </h3>
+
+
+            <p>
+
+                Every individual is different. Ayurvedic
+                healthcare therefore emphasizes personalized
+                assessment and recommendations.
+
+                For specific health concerns, it is important
+                to consult a qualified healthcare professional
+                before beginning any treatment or major
+                dietary or lifestyle change.
+
+            </p>
+
+
+            <br>
+
+
+            <a
+                href="{% url 'blog' %}"
+                class="back-blog"
+            >
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Blog
+
+            </a>
+
+
+        </main>
+
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside class="detail-sidebar">
+
+
+            <div class="sidebar-card">
+
+                <h3>
+
+                    About Sivapriya
+
+                </h3>
+
+
+                <p>
+
+                    Sivapriya Ayurvedic Hospital is dedicated
+                    to providing traditional Ayurvedic
+                    healthcare and wellness guidance in a
+                    caring and professional environment.
+
+                </p>
+
+            </div>
+
+
+            <div class="sidebar-card">
+
+                <h3>
+
+                    Article Information
+
+                </h3>
+
+
+                <p>
+
+                    <strong>
+                        Category:
+                    </strong>
+
+                    {{ blog.category }}
+
+                    <br><br>
+
+
+                    <strong>
+                        Published:
+                    </strong>
+
+                    {{ blog.date }}
+
+                    <br><br>
+
+
+                    <strong>
+                        Author:
+                    </strong>
+
+                    {{ blog.author }}
+
+                </p>
+
+            </div>
+
+
+            <div class="sidebar-card">
+
+                <h3>
+
+                    Need Guidance?
+
+                </h3>
+
+
+                <p>
+
+                    If you would like to learn more about
+                    Ayurvedic treatments and wellness
+                    services, get in touch with Sivapriya
+                    Ayurvedic Hospital.
+
+                </p>
+
+
+                <br>
+
+
+                <a
+                    href="{% url 'contact' %}"
+                    class="back-blog"
+                >
+
+                    Contact Us
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RELATED ARTICLES
+    ====================================================== -->
+
+    {% if related_blogs %}
+
+    <section class="related-section">
+
+
+        <div class="related-heading">
+
+            <span>
+
+                Continue Reading
+
+            </span>
+
+
+            <h2>
+
+                Related Articles
+
+            </h2>
+
+        </div>
+
+
+        <div class="related-grid">
+
+
+            {% for related in related_blogs %}
+
+            <article class="related-card">
+
+
+                <div class="related-image">
+
+                    <img
+                        src="{% static related.image %}"
+                        alt="{{ related.title }}"
+                        loading="lazy"
+                    >
+
+                </div>
+
+
+                <div class="related-content">
+
+                    <span>
+
+                        {{ related.category }}
+
+                    </span>
+
+
+                    <h3>
+
+                        {{ related.title }}
+
+                    </h3>
+
+
+                    <a
+                        href="{% url 'blog_detail' related.id %}"
+                    >
+
+                        Read Article
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}
