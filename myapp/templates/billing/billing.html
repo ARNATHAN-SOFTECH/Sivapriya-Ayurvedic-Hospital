@@ -1,0 +1,2706 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Billing | Sivapriya Ayurvedic Hospital
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+
+:root {
+    --green-dark: #123c2d;
+    --green: #1f5a43;
+    --green-light: #edf6f1;
+
+    --gold: #d4af37;
+    --gold-dark: #b8941f;
+
+    --white: #ffffff;
+
+    --text: #1d2a24;
+    --muted: #6b756f;
+
+    --border: #dfe6e1;
+
+    --danger: #c0392b;
+    --success: #2e7d32;
+
+    --shadow: 0 12px 35px rgba(18, 60, 45, 0.10);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.billing-page,
+.billing-page * {
+    box-sizing: border-box;
+}
+
+.billing-page {
+    min-height: 100vh;
+    background: #f6f8f6;
+    padding: 35px 20px 60px;
+}
+
+.billing-container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.billing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.billing-title h1 {
+    margin: 0;
+    color: var(--green-dark);
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.billing-title p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.bill-list-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    background: var(--green-dark);
+    color: white;
+
+    padding: 11px 18px;
+
+    border-radius: 10px;
+
+    font-weight: 700;
+
+    transition: all 0.2s ease;
+}
+
+.bill-list-btn:hover {
+    background: var(--gold);
+    color: #111;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.billing-card {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
+
+    margin-bottom: 22px;
+
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 18px 22px;
+
+    background: var(--green-light);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.card-header h2 {
+    margin: 0;
+
+    color: var(--green-dark);
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.card-body {
+    padding: 22px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--text);
+
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    height: 44px;
+
+    border: 1px solid #ccd6d0;
+    border-radius: 9px;
+
+    padding: 0 13px;
+
+    background: #fff;
+    color: #222;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all 0.2s ease;
+}
+
+.form-control:hover {
+    border-color: #b8c5be;
+}
+
+.form-control:focus {
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 3px rgba(212, 175, 55, 0.12);
+}
+
+textarea.form-control {
+    height: auto;
+    min-height: 90px;
+
+    padding: 12px;
+
+    resize: vertical;
+}
+
+.required {
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   PATIENT MODE
+========================================================= */
+
+.patient-mode {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.mode-option {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 16px;
+
+    border: 2px solid var(--border);
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.mode-option:hover {
+    border-color: var(--gold);
+
+    background: #fffdf5;
+}
+
+.mode-option.active {
+    border-color: var(--gold);
+
+    background: #fffdf5;
+
+    box-shadow:
+        0 5px 18px rgba(212, 175, 55, 0.12);
+}
+
+.mode-option input {
+    width: 18px;
+    height: 18px;
+
+    accent-color: var(--gold);
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+.mode-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--green-light);
+
+    color: var(--green-dark);
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+    flex-shrink: 0;
+}
+
+.mode-option strong {
+    display: block;
+
+    color: var(--green-dark);
+
+    font-size: 14px;
+
+    margin-bottom: 3px;
+}
+
+.mode-option small {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   PATIENT SECTIONS
+========================================================= */
+
+.patient-section {
+    width: 100%;
+}
+
+.new-patient-grid {
+    display: grid;
+
+    grid-template-columns:
+        2fr
+        1fr
+        1fr
+        1.5fr;
+
+    gap: 15px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.patient-info {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.info-box {
+    background: #f8faf8;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    padding: 13px;
+}
+
+.info-label {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    font-weight: 700;
+
+    margin-bottom: 4px;
+}
+
+.info-value {
+    color: var(--green-dark);
+
+    font-weight: 800;
+
+    font-size: 14px;
+
+    word-break: break-word;
+}
+
+.no-patient-message {
+    padding: 13px 15px;
+
+    background: #fff8e6;
+
+    border: 1px solid #ecd48a;
+
+    border-radius: 9px;
+
+    color: #705b14;
+
+    font-size: 13px;
+}
+
+.new-patient-note {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 5px;
+
+    padding: 12px 15px;
+
+    background: var(--green-light);
+
+    border-radius: 9px;
+
+    color: var(--green-dark);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ADD ITEM
+========================================================= */
+
+.add-item-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        140px
+        auto;
+
+    gap: 12px;
+
+    align-items: end;
+}
+
+.add-item-btn {
+    height: 44px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--green-dark);
+
+    color: white;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    white-space: nowrap;
+}
+
+.add-item-btn:hover {
+    background: var(--gold);
+
+    color: #111;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.billing-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 700px;
+}
+
+.billing-table th {
+    background: var(--green-dark);
+
+    color: white;
+
+    padding: 13px;
+
+    text-align: left;
+
+    font-size: 13px;
+}
+
+.billing-table td {
+    padding: 13px;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--text);
+
+    font-size: 14px;
+}
+
+.billing-table tbody tr:hover td {
+    background: #fafcfa;
+}
+
+.remove-btn {
+    border: none;
+
+    background: #fff0ee;
+
+    color: var(--danger);
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: 900;
+
+    font-size: 18px;
+
+    transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+    background: var(--danger);
+
+    color: white;
+}
+
+.empty-message {
+    text-align: center;
+
+    padding: 35px 15px !important;
+
+    color: var(--muted) !important;
+}
+
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.summary-layout {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        400px;
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+.payment-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary-box {
+    background: #f8faf8;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    padding: 20px;
+}
+
+.summary-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 9px 0;
+
+    color: var(--text);
+}
+
+.summary-row + .summary-row {
+    border-top: 1px solid var(--border);
+}
+
+.summary-row.total {
+    margin-top: 8px;
+
+    padding-top: 15px;
+
+    font-size: 21px;
+
+    color: var(--green-dark);
+
+    font-weight: 900;
+}
+
+.summary-row.balance {
+    color: var(--danger);
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.submit-area {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 22px;
+}
+
+.generate-btn {
+    border: none;
+
+    background: var(--gold);
+
+    color: #111;
+
+    min-width: 220px;
+
+    padding: 14px 25px;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.generate-btn:hover {
+    background: var(--green-dark);
+
+    color: white;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ERROR STATE
+========================================================= */
+
+.form-control.input-error {
+    border-color: var(--danger);
+
+    box-shadow:
+        0 0 0 3px rgba(192, 57, 43, 0.10);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .new-patient-grid {
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+    .summary-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .patient-info {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .patient-mode {
+        grid-template-columns: 1fr;
+    }
+
+    .add-item-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .new-patient-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .billing-page {
+        padding:
+            20px
+            12px
+            40px;
+    }
+
+    .billing-title h1 {
+        font-size: 25px;
+    }
+
+    .card-body {
+        padding: 16px;
+    }
+
+    .patient-info {
+        grid-template-columns: 1fr;
+    }
+
+    .generate-btn {
+        width: 100%;
+    }
+
+    .submit-area {
+        display: block;
+    }
+
+    .bill-list-btn {
+        width: 100%;
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+     BILLING PAGE
+========================================================= -->
+
+<div class="billing-page">
+
+    <div class="billing-container">
+
+
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+
+        <div class="billing-header">
+
+            <div class="billing-title">
+
+                <h1>
+                    Hospital Billing
+                </h1>
+
+                <p>
+                    Create treatment and medicine bills
+                    for registered OP patients.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'bill_list' %}"
+                class="bill-list-btn"
+            >
+                <i class="fa-solid fa-file-invoice"></i>
+                &nbsp;
+                View Bills
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             BILLING FORM
+        ====================================================== -->
+
+        <form
+            method="POST"
+            id="billingForm"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- =================================================
+                 1. PATIENT
+            ================================================== -->
+
+            <div class="billing-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        1. Select / Add Patient
+                    </h2>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                    <!-- =========================================
+                         PATIENT MODE
+                    ========================================== -->
+
+                    <div class="patient-mode">
+
+
+                        <!-- EXISTING PATIENT -->
+
+                        <label
+                            class="mode-option active"
+                            id="existingMode"
+                        >
+
+                            <input
+                                type="radio"
+                                name="patient_mode"
+                                value="existing"
+                                checked
+                            >
+
+                            <span class="mode-icon">
+                                <i class="fa-solid fa-user-check"></i>
+                            </span>
+
+                            <span>
+
+                                <strong>
+                                    Select Existing OP Patient
+                                </strong>
+
+                                <small>
+                                    Choose an already registered patient
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                        <!-- NEW PATIENT -->
+
+                        <label
+                            class="mode-option"
+                            id="newMode"
+                        >
+
+                            <input
+                                type="radio"
+                                name="patient_mode"
+                                value="new"
+                            >
+
+                            <span class="mode-icon">
+                                <i class="fa-solid fa-user-plus"></i>
+                            </span>
+
+                            <span>
+
+                                <strong>
+                                    Add New Patient
+                                </strong>
+
+                                <small>
+                                    Enter patient details manually
+                                </small>
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         EXISTING PATIENT SECTION
+                    ========================================== -->
+
+                    <div
+                        id="existingPatientSection"
+                        class="patient-section"
+                    >
+
+                        <div class="form-group">
+
+                            <label for="patientSelect">
+                                OP Number / Patient
+                            </label>
+
+                            <select
+                                name="existing_patient"
+                                id="patientSelect"
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select OP Number / Patient
+                                </option>
+
+                                {% for patient in patients %}
+
+                                    <option
+                                        value="{{ patient.id }}"
+                                    >
+
+                                        {{ patient.op_number }}
+                                        -
+                                        {{ patient.name }}
+
+                                        {% if patient.phone %}
+                                            | {{ patient.phone }}
+                                        {% endif %}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        {% if not patients %}
+
+                            <div class="no-patient-message">
+
+                                <i class="fa-solid fa-circle-info"></i>
+
+                                No registered patients found.
+                                Please use
+                                <strong>Add New Patient</strong>.
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         NEW PATIENT SECTION
+                    ========================================== -->
+
+                    <div
+                        id="newPatientSection"
+                        class="patient-section"
+                        style="display: none;"
+                    >
+
+                        <div class="new-patient-grid">
+
+
+                            <!-- NAME -->
+
+                            <div class="form-group">
+
+                                <label for="newPatientName">
+
+                                    Patient Name
+
+                                    <span class="required">
+                                        *
+                                    </span>
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="new_patient_name"
+                                    id="newPatientName"
+                                    class="form-control"
+                                    placeholder="Enter patient name"
+                                >
+
+                            </div>
+
+
+                            <!-- AGE -->
+
+                            <div class="form-group">
+
+                                <label for="newPatientAge">
+                                    Age
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="new_patient_age"
+                                    id="newPatientAge"
+                                    class="form-control"
+                                    min="0"
+                                    max="120"
+                                    placeholder="Age"
+                                >
+
+                            </div>
+
+
+                            <!-- GENDER -->
+
+                            <div class="form-group">
+
+                                <label for="newPatientGender">
+                                    Gender
+                                </label>
+
+                                <select
+                                    name="new_patient_gender"
+                                    id="newPatientGender"
+                                    class="form-control"
+                                >
+
+                                    <option value="">
+                                        Select Gender
+                                    </option>
+
+                                    <option value="Male">
+                                        Male
+                                    </option>
+
+                                    <option value="Female">
+                                        Female
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="form-group">
+
+                                <label for="newPatientPhone">
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    name="new_patient_phone"
+                                    id="newPatientPhone"
+                                    class="form-control"
+                                    placeholder="Enter phone number"
+                                >
+
+                            </div>
+
+
+                            <!-- ADDRESS -->
+
+                            <div class="form-group full-width">
+
+                                <label for="newPatientAddress">
+                                    Address
+                                </label>
+
+                                <textarea
+                                    name="new_patient_address"
+                                    id="newPatientAddress"
+                                    class="form-control"
+                                    rows="3"
+                                    placeholder="Enter patient address"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="new-patient-note">
+
+                            <i class="fa-solid fa-circle-info"></i>
+
+                            A new OP number will be generated
+                            automatically when this patient is saved.
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         PATIENT INFORMATION
+                    ========================================== -->
+
+                    <div
+                        class="patient-info"
+                        id="patientInfo"
+                        style="display: none;"
+                    >
+
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                OP Number
+                            </div>
+
+                            <div
+                                class="info-value"
+                                id="displayOpNumber"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                Patient Name
+                            </div>
+
+                            <div
+                                class="info-value"
+                                id="displayName"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                Age / Gender
+                            </div>
+
+                            <div
+                                class="info-value"
+                                id="displayAgeGender"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <div class="info-label">
+                                Phone
+                            </div>
+
+                            <div
+                                class="info-value"
+                                id="displayPhone"
+                            >
+                                -
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 2. TREATMENTS
+            ================================================== -->
+
+            <div class="billing-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        2. Add Treatment
+                    </h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="add-item-grid">
+
+
+                        <div class="form-group">
+
+                            <label for="treatmentSelect">
+                                Treatment
+                            </label>
+
+                            <select
+                                id="treatmentSelect"
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select Treatment
+                                </option>
+
+                                {% for treatment in treatments %}
+
+                                    <option
+                                        value="{{ treatment.id }}"
+                                        data-name="{{ treatment.name }}"
+                                        data-price="{{ treatment.amount }}"
+                                    >
+
+                                        {{ treatment.name }}
+                                        - ₹{{ treatment.amount }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="treatmentQuantity">
+                                Quantity
+                            </label>
+
+                            <input
+                                type="number"
+                                id="treatmentQuantity"
+                                class="form-control"
+                                min="1"
+                                value="1"
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="add-item-btn"
+                            id="addTreatmentBtn"
+                        >
+                            + Add Treatment
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 3. MEDICINES
+            ================================================== -->
+
+            <div class="billing-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        3. Add Medicine
+                    </h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="add-item-grid">
+
+
+                        <div class="form-group">
+
+                            <label for="medicineSelect">
+                                Medicine
+                            </label>
+
+                            <select
+                                id="medicineSelect"
+                                class="form-control"
+                            >
+
+                                <option value="">
+                                    Select Medicine
+                                </option>
+
+                                {% for medicine in medicines %}
+
+                                    <option
+                                        value="{{ medicine.id }}"
+                                        data-name="{{ medicine.name }}"
+                                        data-price="{{ medicine.amount }}"
+                                        data-stock="{{ medicine.stock }}"
+                                    >
+
+                                        {{ medicine.name }}
+                                        - ₹{{ medicine.amount }}
+                                        | Stock: {{ medicine.stock }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="medicineQuantity">
+                                Quantity
+                            </label>
+
+                            <input
+                                type="number"
+                                id="medicineQuantity"
+                                class="form-control"
+                                min="1"
+                                value="1"
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="add-item-btn"
+                            id="addMedicineBtn"
+                        >
+                            + Add Medicine
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 4. BILL ITEMS
+            ================================================== -->
+
+            <div class="billing-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        4. Bill Items
+                    </h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-wrapper">
+
+                        <table class="billing-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Type
+                                    </th>
+
+                                    <th>
+                                        Item
+                                    </th>
+
+                                    <th>
+                                        Quantity
+                                    </th>
+
+                                    <th>
+                                        Unit Price
+                                    </th>
+
+                                    <th>
+                                        Amount
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="billItems">
+
+                                <tr id="emptyRow">
+
+                                    <td
+                                        colspan="6"
+                                        class="empty-message"
+                                    >
+                                        No items added yet.
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 5. PAYMENT
+            ================================================== -->
+
+            <div class="billing-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        5. Payment
+                    </h2>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="summary-layout">
+
+
+                        <!-- PAYMENT DETAILS -->
+
+                        <div>
+
+                            <div class="payment-grid">
+
+
+                                <div class="form-group">
+
+                                    <label for="paymentMethod">
+                                        Payment Method
+                                    </label>
+
+                                    <select
+                                        name="payment_method"
+                                        id="paymentMethod"
+                                        class="form-control"
+                                        required
+                                    >
+
+                                        <option value="Cash">
+                                            Cash
+                                        </option>
+
+                                        <option value="UPI">
+                                            UPI
+                                        </option>
+
+                                        <option value="Card">
+                                            Card
+                                        </option>
+
+                                        <option value="Bank Transfer">
+                                            Bank Transfer
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="paidAmount">
+                                        Paid Amount
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        name="paid_amount"
+                                        id="paidAmount"
+                                        class="form-control"
+                                        value="0"
+                                        min="0"
+                                        step="0.01"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="notes">
+                                    Notes
+                                </label>
+
+                                <textarea
+                                    name="notes"
+                                    id="notes"
+                                    class="form-control"
+                                    placeholder="Optional billing notes"
+                                ></textarea>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- BILL SUMMARY -->
+
+                        <div class="summary-box">
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Treatment Total
+                                </span>
+
+                                <strong>
+                                    ₹<span id="treatmentTotal">0.00</span>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Medicine Total
+                                </span>
+
+                                <strong>
+                                    ₹<span id="medicineTotal">0.00</span>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-row total">
+
+                                <span>
+                                    Grand Total
+                                </span>
+
+                                <strong>
+                                    ₹<span id="grandTotal">0.00</span>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Paid
+                                </span>
+
+                                <strong>
+                                    ₹<span id="paidDisplay">0.00</span>
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-row balance">
+
+                                <span>
+                                    Balance
+                                </span>
+
+                                <strong>
+                                    ₹<span id="balanceTotal">0.00</span>
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- SUBMIT -->
+
+                    <div class="submit-area">
+
+                        <button
+                            type="submit"
+                            class="generate-btn"
+                        >
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                            &nbsp;
+                            Generate Bill
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const billingForm =
+        document.getElementById("billingForm");
+
+    const existingRadio =
+        document.querySelector(
+            'input[name="patient_mode"][value="existing"]'
+        );
+
+    const newRadio =
+        document.querySelector(
+            'input[name="patient_mode"][value="new"]'
+        );
+
+    const existingMode =
+        document.getElementById("existingMode");
+
+    const newMode =
+        document.getElementById("newMode");
+
+    const existingPatientSection =
+        document.getElementById(
+            "existingPatientSection"
+        );
+
+    const newPatientSection =
+        document.getElementById(
+            "newPatientSection"
+        );
+
+    const patientSelect =
+        document.getElementById(
+            "patientSelect"
+        );
+
+    const patientInfo =
+        document.getElementById(
+            "patientInfo"
+        );
+
+    const newPatientName =
+        document.getElementById(
+            "newPatientName"
+        );
+
+    const newPatientAge =
+        document.getElementById(
+            "newPatientAge"
+        );
+
+    const newPatientGender =
+        document.getElementById(
+            "newPatientGender"
+        );
+
+    const newPatientPhone =
+        document.getElementById(
+            "newPatientPhone"
+        );
+
+    const newPatientAddress =
+        document.getElementById(
+            "newPatientAddress"
+        );
+
+
+    /* =========================================================
+       PATIENT INFO RESET
+    ========================================================= */
+
+    function clearPatientInfo() {
+
+        document.getElementById(
+            "displayOpNumber"
+        ).textContent = "-";
+
+        document.getElementById(
+            "displayName"
+        ).textContent = "-";
+
+        document.getElementById(
+            "displayAgeGender"
+        ).textContent = "-";
+
+        document.getElementById(
+            "displayPhone"
+        ).textContent = "-";
+
+        patientInfo.style.display = "none";
+    }
+
+
+    /* =========================================================
+       CLEAR NEW PATIENT FIELDS
+    ========================================================= */
+
+    function clearNewPatientFields() {
+
+        newPatientName.value = "";
+        newPatientAge.value = "";
+        newPatientGender.value = "";
+        newPatientPhone.value = "";
+        newPatientAddress.value = "";
+
+        removeInputError(newPatientName);
+    }
+
+
+    /* =========================================================
+       SHOW EXISTING PATIENT
+    ========================================================= */
+
+    function showExistingPatient() {
+
+        existingPatientSection.style.display =
+            "block";
+
+        newPatientSection.style.display =
+            "none";
+
+        existingMode.classList.add("active");
+
+        newMode.classList.remove("active");
+
+        clearNewPatientFields();
+
+        clearPatientInfo();
+    }
+
+
+    /* =========================================================
+       SHOW NEW PATIENT
+    ========================================================= */
+
+    function showNewPatient() {
+
+        existingPatientSection.style.display =
+            "none";
+
+        newPatientSection.style.display =
+            "block";
+
+        existingMode.classList.remove("active");
+
+        newMode.classList.add("active");
+
+        if (patientSelect) {
+            patientSelect.value = "";
+        }
+
+        clearPatientInfo();
+    }
+
+
+    /* =========================================================
+       RADIO EVENTS
+    ========================================================= */
+
+    existingRadio.addEventListener(
+        "change",
+        function () {
+
+            if (this.checked) {
+                showExistingPatient();
+            }
+
+        }
+    );
+
+
+    newRadio.addEventListener(
+        "change",
+        function () {
+
+            if (this.checked) {
+                showNewPatient();
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       CLICK EXISTING MODE
+    ========================================================= */
+
+    existingMode.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target !== existingRadio) {
+
+                existingRadio.checked = true;
+
+            }
+
+            showExistingPatient();
+
+        }
+    );
+
+
+    /* =========================================================
+       CLICK NEW MODE
+    ========================================================= */
+
+    newMode.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target !== newRadio) {
+
+                newRadio.checked = true;
+
+            }
+
+            showNewPatient();
+
+        }
+    );
+
+
+    /* =========================================================
+       EXISTING PATIENT CHANGE
+    ========================================================= */
+
+    patientSelect.addEventListener(
+        "change",
+        function () {
+
+            const patientId =
+                this.value;
+
+            if (!patientId) {
+
+                clearPatientInfo();
+
+                return;
+            }
+
+
+            fetch(
+                `/billing/patient/${patientId}/`
+            )
+
+            .then(function (response) {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load patient."
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(function (data) {
+
+                document.getElementById(
+                    "displayOpNumber"
+                ).textContent =
+                    data.op_number || "-";
+
+                document.getElementById(
+                    "displayName"
+                ).textContent =
+                    data.name || "-";
+
+                document.getElementById(
+                    "displayAgeGender"
+                ).textContent =
+                    `${data.age || "-"} / ${data.gender || "-"}`;
+
+                document.getElementById(
+                    "displayPhone"
+                ).textContent =
+                    data.phone || "-";
+
+                patientInfo.style.display =
+                    "grid";
+
+            })
+
+            .catch(function (error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to load patient details."
+                );
+
+                clearPatientInfo();
+
+            });
+
+        }
+    );
+
+
+    /* =========================================================
+       ADD TREATMENT
+    ========================================================= */
+
+    function addTreatment() {
+
+        const select =
+            document.getElementById(
+                "treatmentSelect"
+            );
+
+        const quantityInput =
+            document.getElementById(
+                "treatmentQuantity"
+            );
+
+
+        if (!select.value) {
+
+            alert(
+                "Please select a treatment."
+            );
+
+            select.focus();
+
+            return;
+        }
+
+
+        const option =
+            select.options[
+                select.selectedIndex
+            ];
+
+
+        const id =
+            option.value;
+
+        const name =
+            option.dataset.name;
+
+        const price =
+            parseFloat(
+                option.dataset.price
+            ) || 0;
+
+        const quantity =
+            parseInt(
+                quantityInput.value,
+                10
+            );
+
+
+        if (
+            !quantity ||
+            quantity < 1
+        ) {
+
+            alert(
+                "Please enter a valid quantity."
+            );
+
+            quantityInput.focus();
+
+            return;
+        }
+
+
+        addItemRow(
+            "Treatment",
+            id,
+            name,
+            price,
+            quantity
+        );
+
+
+        select.value = "";
+
+        quantityInput.value = 1;
+    }
+
+
+    document.getElementById(
+        "addTreatmentBtn"
+    ).addEventListener(
+        "click",
+        addTreatment
+    );
+
+
+    /* =========================================================
+       ADD MEDICINE
+    ========================================================= */
+
+    function addMedicine() {
+
+        const select =
+            document.getElementById(
+                "medicineSelect"
+            );
+
+        const quantityInput =
+            document.getElementById(
+                "medicineQuantity"
+            );
+
+
+        if (!select.value) {
+
+            alert(
+                "Please select a medicine."
+            );
+
+            select.focus();
+
+            return;
+        }
+
+
+        const option =
+            select.options[
+                select.selectedIndex
+            ];
+
+
+        const id =
+            option.value;
+
+        const name =
+            option.dataset.name;
+
+        const price =
+            parseFloat(
+                option.dataset.price
+            ) || 0;
+
+        const stock =
+            parseInt(
+                option.dataset.stock,
+                10
+            ) || 0;
+
+        const quantity =
+            parseInt(
+                quantityInput.value,
+                10
+            );
+
+
+        if (
+            !quantity ||
+            quantity < 1
+        ) {
+
+            alert(
+                "Please enter a valid quantity."
+            );
+
+            quantityInput.focus();
+
+            return;
+        }
+
+
+        if (stock <= 0) {
+
+            alert(
+                `${name} is currently out of stock.`
+            );
+
+            return;
+        }
+
+
+        if (quantity > stock) {
+
+            alert(
+                `Only ${stock} units of ${name} are available.`
+            );
+
+            quantityInput.focus();
+
+            return;
+        }
+
+
+        addItemRow(
+            "Medicine",
+            id,
+            name,
+            price,
+            quantity
+        );
+
+
+        select.value = "";
+
+        quantityInput.value = 1;
+    }
+
+
+    document.getElementById(
+        "addMedicineBtn"
+    ).addEventListener(
+        "click",
+        addMedicine
+    );
+
+
+    /* =========================================================
+       ADD BILL ITEM ROW
+    ========================================================= */
+
+    function addItemRow(
+        type,
+        id,
+        name,
+        price,
+        quantity
+    ) {
+
+        const tbody =
+            document.getElementById(
+                "billItems"
+            );
+
+        const emptyRow =
+            document.getElementById(
+                "emptyRow"
+            );
+
+
+        if (emptyRow) {
+            emptyRow.remove();
+        }
+
+
+        const total =
+            price * quantity;
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.dataset.type =
+            type;
+
+        row.dataset.price =
+            price;
+
+
+        const typeName =
+            type.toLowerCase();
+
+
+        row.innerHTML = `
+
+            <td>
+                <strong>
+                    ${escapeHtml(type)}
+                </strong>
+            </td>
+
+            <td>
+
+                ${escapeHtml(name)}
+
+                <input
+                    type="hidden"
+                    name="${typeName}_id[]"
+                    value="${escapeHtml(id)}"
+                >
+
+                <input
+                    type="hidden"
+                    name="${typeName}_quantity[]"
+                    value="${quantity}"
+                >
+
+            </td>
+
+            <td>
+                ${quantity}
+            </td>
+
+            <td>
+                ₹${price.toFixed(2)}
+            </td>
+
+            <td>
+                <strong>
+                    ₹${total.toFixed(2)}
+                </strong>
+            </td>
+
+            <td>
+
+                <button
+                    type="button"
+                    class="remove-btn"
+                    aria-label="Remove item"
+                >
+                    ×
+                </button>
+
+            </td>
+        `;
+
+
+        const removeButton =
+            row.querySelector(
+                ".remove-btn"
+            );
+
+
+        removeButton.addEventListener(
+            "click",
+            function () {
+
+                removeRow(row);
+
+            }
+        );
+
+
+        tbody.appendChild(row);
+
+        calculateTotals();
+    }
+
+
+    /* =========================================================
+       REMOVE ROW
+    ========================================================= */
+
+    function removeRow(row) {
+
+        row.remove();
+
+
+        const tbody =
+            document.getElementById(
+                "billItems"
+            );
+
+
+        const itemRows =
+            tbody.querySelectorAll(
+                "tr[data-type]"
+            );
+
+
+        if (itemRows.length === 0) {
+
+            tbody.innerHTML = `
+
+                <tr id="emptyRow">
+
+                    <td
+                        colspan="6"
+                        class="empty-message"
+                    >
+                        No items added yet.
+                    </td>
+
+                </tr>
+
+            `;
+        }
+
+
+        calculateTotals();
+    }
+
+
+    /* =========================================================
+       CALCULATE TOTALS
+    ========================================================= */
+
+    function calculateTotals() {
+
+        let treatmentTotal = 0;
+
+        let medicineTotal = 0;
+
+
+        const rows =
+            document.querySelectorAll(
+                "#billItems tr[data-type]"
+            );
+
+
+        rows.forEach(
+            function (row) {
+
+                const type =
+                    row.dataset.type;
+
+                const price =
+                    parseFloat(
+                        row.dataset.price
+                    ) || 0;
+
+
+                const quantityInput =
+                    row.querySelector(
+                        'input[name$="_quantity[]"]'
+                    );
+
+
+                if (!quantityInput) {
+                    return;
+                }
+
+
+                const quantity =
+                    parseInt(
+                        quantityInput.value,
+                        10
+                    ) || 0;
+
+
+                const amount =
+                    price * quantity;
+
+
+                if (
+                    type === "Treatment"
+                ) {
+
+                    treatmentTotal +=
+                        amount;
+
+                }
+                else if (
+                    type === "Medicine"
+                ) {
+
+                    medicineTotal +=
+                        amount;
+
+                }
+
+            }
+        );
+
+
+        const grandTotal =
+            treatmentTotal +
+            medicineTotal;
+
+
+        const paid =
+            parseFloat(
+                document.getElementById(
+                    "paidAmount"
+                ).value
+            ) || 0;
+
+
+        const balance =
+            Math.max(
+                grandTotal - paid,
+                0
+            );
+
+
+        document.getElementById(
+            "treatmentTotal"
+        ).textContent =
+            treatmentTotal.toFixed(2);
+
+
+        document.getElementById(
+            "medicineTotal"
+        ).textContent =
+            medicineTotal.toFixed(2);
+
+
+        document.getElementById(
+            "grandTotal"
+        ).textContent =
+            grandTotal.toFixed(2);
+
+
+        document.getElementById(
+            "paidDisplay"
+        ).textContent =
+            paid.toFixed(2);
+
+
+        document.getElementById(
+            "balanceTotal"
+        ).textContent =
+            balance.toFixed(2);
+    }
+
+
+    /* =========================================================
+       PAID AMOUNT
+    ========================================================= */
+
+    document.getElementById(
+        "paidAmount"
+    ).addEventListener(
+        "input",
+        calculateTotals
+    );
+
+
+    /* =========================================================
+       HTML ESCAPE
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value ?? "";
+
+        return div.innerHTML;
+    }
+
+
+    /* =========================================================
+       INPUT ERROR
+    ========================================================= */
+
+    function addInputError(element) {
+
+        element.classList.add(
+            "input-error"
+        );
+    }
+
+
+    function removeInputError(element) {
+
+        element.classList.remove(
+            "input-error"
+        );
+    }
+
+
+    /* =========================================================
+       FORM SUBMISSION VALIDATION
+    ========================================================= */
+
+    billingForm.addEventListener(
+        "submit",
+        function (event) {
+
+            const selectedMode =
+                document.querySelector(
+                    'input[name="patient_mode"]:checked'
+                );
+
+
+            /* -----------------------------------------------
+               CHECK PATIENT MODE
+            ------------------------------------------------ */
+
+            if (!selectedMode) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please select a patient mode."
+                );
+
+                return;
+            }
+
+
+            /* -----------------------------------------------
+               EXISTING PATIENT
+            ------------------------------------------------ */
+
+            if (
+                selectedMode.value ===
+                "existing"
+            ) {
+
+                if (!patientSelect.value) {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Please select an OP number / patient."
+                    );
+
+                    patientSelect.focus();
+
+                    return;
+                }
+
+            }
+
+
+            /* -----------------------------------------------
+               NEW PATIENT
+            ------------------------------------------------ */
+
+            if (
+                selectedMode.value ===
+                "new"
+            ) {
+
+                const patientName =
+                    newPatientName.value.trim();
+
+
+                if (!patientName) {
+
+                    event.preventDefault();
+
+                    addInputError(
+                        newPatientName
+                    );
+
+                    alert(
+                        "Please enter the new patient's name."
+                    );
+
+                    newPatientName.focus();
+
+                    return;
+                }
+
+
+                removeInputError(
+                    newPatientName
+                );
+
+            }
+
+
+            /* -----------------------------------------------
+               CHECK BILL ITEMS
+            ------------------------------------------------ */
+
+            const rows =
+                document.querySelectorAll(
+                    "#billItems tr[data-type]"
+                );
+
+
+            if (rows.length === 0) {
+
+                event.preventDefault();
+
+                alert(
+                    "Please add at least one treatment or medicine."
+                );
+
+                return;
+            }
+
+
+            /* -----------------------------------------------
+               CHECK GRAND TOTAL
+            ------------------------------------------------ */
+
+            const grandTotal =
+                parseFloat(
+                    document.getElementById(
+                        "grandTotal"
+                    ).textContent
+                ) || 0;
+
+
+            const paid =
+                parseFloat(
+                    document.getElementById(
+                        "paidAmount"
+                    ).value
+                ) || 0;
+
+
+            if (paid < 0) {
+
+                event.preventDefault();
+
+                alert(
+                    "Paid amount cannot be negative."
+                );
+
+                return;
+            }
+
+
+            if (paid > grandTotal) {
+
+                event.preventDefault();
+
+                alert(
+                    "Paid amount cannot be greater than the bill total."
+                );
+
+                return;
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIAL STATE
+    ========================================================= */
+
+    if (
+        existingRadio &&
+        existingRadio.checked
+    ) {
+
+        showExistingPatient();
+
+    }
+
+
+    /* =========================================================
+       INITIAL TOTALS
+    ========================================================= */
+
+    calculateTotals();
+
+});
+
+</script>
+
+{% endblock %}

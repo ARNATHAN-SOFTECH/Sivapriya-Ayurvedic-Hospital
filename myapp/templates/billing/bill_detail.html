@@ -1,0 +1,502 @@
+{% extends "base.html" %}
+
+{% block title %}
+Bill {{ bill.bill_number }} | Sivapriya Ayurvedic Hospital
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .invoice-page {
+        background: #f4f6f4;
+        padding: 35px 15px;
+        min-height: 100vh;
+    }
+
+    .invoice {
+        max-width: 850px;
+        margin: auto;
+        background: white;
+        padding: 40px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+    }
+
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        border-bottom: 2px solid #d4af37;
+        padding-bottom: 20px;
+    }
+
+    .hospital-name {
+        color: #123c2d;
+        font-size: 26px;
+        font-weight: 900;
+        margin: 0;
+    }
+
+    .hospital-subtitle {
+        color: #68736d;
+        margin-top: 6px;
+        font-size: 13px;
+    }
+
+    .bill-heading {
+        text-align: right;
+    }
+
+    .bill-heading h2 {
+        margin: 0;
+        color: #123c2d;
+    }
+
+    .bill-number {
+        margin-top: 6px;
+        font-weight: 800;
+    }
+
+    .patient-section {
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .patient-box {
+        background: #f7faf8;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .patient-box strong {
+        display: block;
+        color: #123c2d;
+        margin-bottom: 5px;
+    }
+
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+    }
+
+    .invoice-table th {
+        background: #123c2d;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .invoice-table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .totals {
+        width: 350px;
+        max-width: 100%;
+        margin-left: auto;
+        margin-top: 25px;
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+    }
+
+    .grand-total {
+        border-top: 2px solid #123c2d;
+        margin-top: 8px;
+        padding-top: 12px;
+        font-size: 20px;
+        font-weight: 900;
+        color: #123c2d;
+    }
+
+    .payment-status {
+        margin-top: 20px;
+        padding: 14px;
+        background: #f7faf8;
+        border-radius: 8px;
+    }
+
+    .print-actions {
+        max-width: 850px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .print-btn {
+        border: none;
+        padding: 12px 22px;
+        border-radius: 8px;
+        background: #d4af37;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        background: #123c2d;
+        color: white;
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-weight: 800;
+    }
+
+    @media print {
+
+        body {
+            background: white !important;
+        }
+
+        .invoice-page {
+            padding: 0;
+            background: white;
+        }
+
+        .invoice {
+            box-shadow: none;
+            padding: 15px;
+            max-width: none;
+        }
+
+        .print-actions {
+            display: none;
+        }
+    }
+
+    @media(max-width:600px) {
+
+        .invoice {
+            padding: 20px;
+        }
+
+        .invoice-header {
+            flex-direction: column;
+        }
+
+        .bill-heading {
+            text-align: left;
+        }
+
+        .patient-section {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>
+
+
+<div class="invoice-page">
+
+    <div class="invoice">
+
+        <div class="invoice-header">
+
+            <div>
+
+                <h1 class="hospital-name">
+                    Sivapriya Ayurvedic Hospital
+                </h1>
+
+                <div class="hospital-subtitle">
+                    Ayurveda Healthcare & Wellness
+                </div>
+
+            </div>
+
+            <div class="bill-heading">
+
+                <h2>
+                    BILL
+                </h2>
+
+                <div class="bill-number">
+                    {{ bill.bill_number }}
+                </div>
+
+                <div>
+                    {{ bill.bill_date|date:"d M Y, h:i A" }}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PATIENT -->
+
+        <div class="patient-section">
+
+            <div class="patient-box">
+
+                <strong>
+                    OP Number
+                </strong>
+
+                {{ bill.patient.op_number }}
+
+            </div>
+
+
+            <div class="patient-box">
+
+                <strong>
+                    Patient Name
+                </strong>
+
+                {{ bill.patient.name }}
+
+            </div>
+
+
+            <div class="patient-box">
+
+                <strong>
+                    Age / Gender
+                </strong>
+
+                {{ bill.patient.age }}
+                /
+                {{ bill.patient.gender }}
+
+            </div>
+
+
+            <div class="patient-box">
+
+                <strong>
+                    Phone
+                </strong>
+
+                {{ bill.patient.phone }}
+
+            </div>
+
+        </div>
+
+
+        <!-- ITEMS -->
+
+        <table class="invoice-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Type
+                    </th>
+
+                    <th>
+                        Item
+                    </th>
+
+                    <th>
+                        Qty
+                    </th>
+
+                    <th>
+                        Unit Price
+                    </th>
+
+                    <th>
+                        Amount
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in items %}
+
+                    <tr>
+
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td>
+                            {{ item.item_type }}
+                        </td>
+
+                        <td>
+                            {{ item.item_name }}
+                        </td>
+
+                        <td>
+                            {{ item.quantity }}
+                        </td>
+
+                        <td>
+                            ₹{{ item.unit_price|floatformat:2 }}
+                        </td>
+
+                        <td>
+                            ₹{{ item.total_amount|floatformat:2 }}
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- TOTAL -->
+
+        <div class="totals">
+
+            <div class="total-row">
+
+                <span>
+                    Treatment Total
+                </span>
+
+                <strong>
+                    ₹{{ bill.treatment_total|floatformat:2 }}
+                </strong>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span>
+                    Medicine Total
+                </span>
+
+                <strong>
+                    ₹{{ bill.medicine_total|floatformat:2 }}
+                </strong>
+
+            </div>
+
+
+            <div class="total-row grand-total">
+
+                <span>
+                    Grand Total
+                </span>
+
+                <strong>
+                    ₹{{ bill.grand_total|floatformat:2 }}
+                </strong>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span>
+                    Paid
+                </span>
+
+                <strong>
+                    ₹{{ bill.paid_amount|floatformat:2 }}
+                </strong>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span>
+                    Balance
+                </span>
+
+                <strong>
+                    ₹{{ bill.balance_amount|floatformat:2 }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="payment-status">
+
+            <strong>
+                Payment Method:
+            </strong>
+
+            {{ bill.payment_method }}
+
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+
+            <strong>
+                Status:
+            </strong>
+
+            {{ bill.status }}
+
+        </div>
+
+
+        {% if bill.notes %}
+
+            <div style="margin-top:20px;">
+
+                <strong>
+                    Notes:
+                </strong>
+
+                {{ bill.notes }}
+
+            </div>
+
+        {% endif %}
+
+
+        <div
+            style="
+                margin-top:40px;
+                text-align:center;
+                color:#68736d;
+                font-size:13px;
+            "
+        >
+
+            Thank you for choosing
+            Sivapriya Ayurvedic Hospital.
+
+        </div>
+
+    </div>
+
+
+    <div class="print-actions">
+
+        <a
+            href="{% url 'billing' %}"
+            class="back-btn"
+        >
+            New Bill
+        </a>
+
+        <button
+            onclick="window.print()"
+            class="print-btn"
+        >
+            Print Bill
+        </button>
+
+    </div>
+
+</div>
+
+{% endblock %}
