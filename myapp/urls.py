@@ -23,4 +23,6 @@ urlpatterns = [
     path('accounts/login/',auth_views.LoginView.as_view(template_name="registration/login.html"),name="login"
 ),
 
+    path('op-registration/', views.op_registration, name='op_registration'),
+
 ]
