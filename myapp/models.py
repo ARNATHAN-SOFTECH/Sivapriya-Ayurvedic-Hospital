@@ -1,6 +1,56 @@
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
 
+
+class OPRegistration(models.Model):
+
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    )
+
+    patient_name = models.CharField(max_length=150)
+    mobile = models.CharField(max_length=15)
+    age = models.PositiveIntegerField()
+    gender = models.CharField(
+        max_length=10,
+        choices=(
+            ('Male', 'Male'),
+            ('Female', 'Female'),
+            ('Other', 'Other'),
+        )
+    )
+
+    doctor = models.ForeignKey(
+        'Doctor',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    appointment_date = models.DateField()
+    symptoms = models.TextField(blank=True)
+
+    token_number = models.PositiveIntegerField(
+        null=True,
+        blank=True
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    def __str__(self):
+        return f"{self.patient_name} - {self.appointment_date}"
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)

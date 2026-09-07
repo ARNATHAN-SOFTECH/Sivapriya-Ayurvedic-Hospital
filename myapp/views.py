@@ -1,8 +1,38 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Doctor
 from .models import Gallery
 from .models import FAQCategory
+from .models import Doctor, OPRegistration
 
+
+def op_registration(request):
+
+    doctors = Doctor.objects.filter(available=True)
+
+    if request.method == "POST":
+
+        OPRegistration.objects.create(
+            patient_name=request.POST.get('patient_name'),
+            mobile=request.POST.get('mobile'),
+            age=request.POST.get('age'),
+            gender=request.POST.get('gender'),
+            doctor_id=request.POST.get('doctor'),
+            appointment_date=request.POST.get('appointment_date'),
+            symptoms=request.POST.get('symptoms'),
+        )
+
+        return render(
+            request,
+            'op_success.html'
+        )
+
+    return render(
+        request,
+        'op_registration.html',
+        {
+            'doctors': doctors
+        }
+    )
 
 def faq(request):
     categories = FAQCategory.objects.prefetch_related('faqs').all()

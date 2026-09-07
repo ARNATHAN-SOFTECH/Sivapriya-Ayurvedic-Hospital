@@ -16,4 +16,6 @@ urlpatterns = [
     path('gallery/', views.gallery, name='gallery'),
     path('faq/', views.faq, name='faq'),
 
+    path('op-registration/', views.op_registration, name='op_registration'),
+
 ]

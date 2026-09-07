@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+
+{% block title %}OP Registration{% endblock %}
+
+{% block content %}
+
+<style>
+.op-section{
+    padding:80px 0;
+    background:#f8faf8;
+}
+
+.op-header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.op-header h2{
+    font-size:42px;
+    font-weight:700;
+    color:#1f4b2c;
+    margin-bottom:15px;
+}
+
+.op-header p{
+    max-width:700px;
+    margin:auto;
+    color:#6b7280;
+    font-size:17px;
+}
+
+.op-card{
+    max-width:950px;
+    margin:auto;
+    border:none;
+    border-radius:18px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+.op-card-header{
+    background:var(--primary);
+    color:#fff;
+    padding:25px 30px;
+}
+
+.op-card-header h3{
+    margin:0;
+    font-size:24px;
+    font-weight:600;
+}
+
+.op-card-body{
+    padding:35px;
+}
+
+.form-label{
+    font-weight:600;
+    color:#1f4b2c;
+    margin-bottom:8px;
+}
+
+.form-control,
+.form-select{
+    border-radius:10px;
+    padding:12px 15px;
+    border:1px solid #d7e2d8;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:var(--primary-dark);
+    box-shadow:0 0 0 0.15rem rgba(31,122,62,.15);
+}
+
+.op-btn{
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    padding:12px 30px;
+    border-radius:10px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.op-btn:hover{
+    background:#166330;
+    transform:translateY(-2px);
+}
+
+.info-box{
+    background:#eef8f0;
+    border-left:4px solid var(--primary-dark);
+    padding:15px 20px;
+    border-radius:10px;
+    margin-bottom:25px;
+}
+
+.info-box p{
+    margin:0;
+    color:#2f4f38;
+    font-size:14px;
+}
+
+@media(max-width:768px){
+
+    .op-header h2{
+        font-size:30px;
+    }
+
+    .op-card-body{
+        padding:25px;
+    }
+}
+</style>
+
+<section class="op-section">
+
+    <div class="container">
+
+        <div class="op-header">
+            <h2>Online OP Registration</h2>
+            <p>
+                Register your outpatient consultation online and
+                reduce waiting time at the hospital.
+            </p>
+        </div>
+
+        <div class="op-card">
+
+            <div class="op-card-header">
+                <h3>
+                    <i class="fa-solid fa-user-plus me-2"></i>
+                    OP Registration Form
+                </h3>
+            </div>
+
+            <div class="op-card-body">
+
+                <div class="info-box">
+                    <p>
+                        Please fill in your details correctly.
+                        Our team will verify and confirm your OP registration.
+                    </p>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Patient Name
+                            </label>
+                            <input type="text"
+                                   name="patient_name"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Mobile Number
+                            </label>
+                            <input type="text"
+                                   name="mobile"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">
+                                Age
+                            </label>
+                            <input type="number"
+                                   name="age"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">
+                                Gender
+                            </label>
+                            <select name="gender"
+                                    class="form-select">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">
+                                Appointment Date
+                            </label>
+                            <input type="date"
+                                   name="appointment_date"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">
+                                Select Doctor
+                            </label>
+
+                            <select name="doctor"
+                                    class="form-select">
+
+                                <option value="">
+                                    Any Available Doctor
+                                </option>
+
+                                {% for doctor in doctors %}
+                                <option value="{{ doctor.id }}">
+                                    Dr. {{ doctor.name }}
+                                    - {{ doctor.specialization }}
+                                </option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <label class="form-label">
+                                Symptoms / Reason for Visit
+                            </label>
+
+                            <textarea name="symptoms"
+                                      rows="4"
+                                      class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <button type="submit"
+                                    class="op-btn">
+                                Register OP
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

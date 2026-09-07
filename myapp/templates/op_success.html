@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}Registration Successful{% endblock %}
+
+{% block content %}
+
+<style>
+.success-section{
+    padding:80px 0;
+    background:#f8faf8;
+    min-height:70vh;
+    display:flex;
+    align-items:center;
+}
+
+.success-card{
+    max-width:700px;
+    margin:auto;
+    background:#fff;
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 35px rgba(0,0,0,0.08);
+    text-align:center;
+    padding:60px 40px;
+}
+
+.success-icon{
+    width:90px;
+    height:90px;
+    margin:0 auto 25px;
+    border-radius:50%;
+    background:#e9f5ec;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.success-icon i{
+    font-size:42px;
+    color:var(--primary);
+}
+
+.success-card h2{
+    color:var(--primary);
+    font-size:36px;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.success-card p{
+    color:#6b7280;
+    font-size:17px;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.success-info{
+    background:#f3faf4;
+    border-left:4px solid var(--primary-dark);
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:30px;
+}
+
+.success-info p{
+    margin:0;
+    font-size:15px;
+    color:#2f4f38;
+}
+
+.success-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--primary);
+    color:#fff;
+    text-decoration:none;
+    padding:12px 28px;
+    border-radius:10px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.success-btn:hover{
+    background:#166330;
+    color:#fff;
+    transform:translateY(-2px);
+}
+
+@media(max-width:768px){
+
+    .success-card{
+        padding:40px 25px;
+    }
+
+    .success-card h2{
+        font-size:28px;
+    }
+
+    .success-card p{
+        font-size:15px;
+    }
+}
+</style>
+
+<section class="success-section">
+
+    <div class="container">
+
+        <div class="success-card">
+
+            <div class="success-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <h2>Registration Successful</h2>
+
+            <p>
+                Your OP registration request has been submitted successfully.
+                Our team will review the details and confirm your appointment.
+            </p>
+
+            <div class="success-info">
+                <p>
+                    Arrive at the hospital 15 minutes before your consultation.
+                </p>
+            </div>
+
+            <a href="{% url 'home' %}" class="success-btn">
+                <i class="fa-solid fa-house"></i>
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
