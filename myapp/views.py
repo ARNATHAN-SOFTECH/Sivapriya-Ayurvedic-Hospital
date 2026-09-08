@@ -1,8 +1,11 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Doctor
-from .models import Gallery
-from .models import FAQCategory
-from .models import Doctor, OPRegistration
+from .models import (
+    Doctor,
+    Gallery,
+    FAQCategory,
+    OPRegistration,
+    Patient,
+)
 
 
 def op_registration(request):
@@ -11,19 +14,33 @@ def op_registration(request):
 
     if request.method == "POST":
 
-        OPRegistration.objects.create(
+        op = OPRegistration.objects.create(
             patient_name=request.POST.get('patient_name'),
             mobile=request.POST.get('mobile'),
             age=request.POST.get('age'),
             gender=request.POST.get('gender'),
-            doctor_id=request.POST.get('doctor'),
+            doctor_id=request.POST.get('doctor') or None,
             appointment_date=request.POST.get('appointment_date'),
             symptoms=request.POST.get('symptoms'),
         )
 
+        # Create corresponding Patient record for Billing
+        Patient.objects.get_or_create(
+            op_number=op.op_number,
+            defaults={
+                "name": op.patient_name,
+                "age": op.age,
+                "gender": op.gender,
+                "phone": op.mobile,
+            }
+        )
+
         return render(
             request,
-            'op_success.html'
+            'op_success.html',
+            {
+                'op': op
+            }
         )
 
     return render(
@@ -331,7 +348,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import BillForm
 from .models import (
-    Patient,
     Treatment,
     Medicine,
     Bill,
