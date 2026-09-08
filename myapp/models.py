@@ -11,6 +11,11 @@ class OPRegistration(models.Model):
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
     )
+    op_number = models.CharField(
+        max_length=30,
+        unique=True,
+        blank=True
+    )
 
     patient_name = models.CharField(max_length=150)
     mobile = models.CharField(max_length=15)
@@ -49,8 +54,37 @@ class OPRegistration(models.Model):
         auto_now_add=True
     )
 
+    def save(self, *args, **kwargs):
+
+        if not self.op_number:
+
+            last_op = (
+                OPRegistration.objects
+                .order_by('-id')
+                .first()
+            )
+
+            if last_op and last_op.op_number:
+
+                try:
+                    last_number = int(
+                        last_op.op_number.replace("OP", "")
+                    )
+                except:
+                    last_number = 0
+
+            else:
+                last_number = 0
+
+            self.op_number = (
+                f"OP{last_number + 1:05d}"
+            )
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.patient_name} - {self.appointment_date}"
+
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True)
@@ -137,6 +171,13 @@ class Patient(models.Model):
         ("Female", "Female"),
         ("Other", "Other"),
     ]
+    
+    op_registration = models.OneToOneField(
+        OPRegistration,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
 
     op_number = models.CharField(
         max_length=30,
