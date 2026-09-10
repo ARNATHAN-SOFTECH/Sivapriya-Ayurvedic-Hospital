@@ -15,39 +15,41 @@ def op_registration(request):
     if request.method == "POST":
 
         op = OPRegistration.objects.create(
-            patient_name=request.POST.get('patient_name'),
-            mobile=request.POST.get('mobile'),
-            age=request.POST.get('age'),
-            gender=request.POST.get('gender'),
-            doctor_id=request.POST.get('doctor') or None,
-            appointment_date=request.POST.get('appointment_date'),
-            symptoms=request.POST.get('symptoms'),
+            patient_name=request.POST.get("patient_name"),
+            mobile=request.POST.get("mobile"),
+            age=request.POST.get("age"),
+            gender=request.POST.get("gender"),
+            doctor_id=request.POST.get("doctor") or None,
+            appointment_date=request.POST.get("appointment_date"),
+            symptoms=request.POST.get("symptoms"),
         )
 
-        # Create corresponding Patient record for Billing
-        Patient.objects.get_or_create(
+        # -------------------------------------------------
+        # Create Patient record linked to this OP
+        # -------------------------------------------------
+
+        Patient.objects.create(
+            op_registration=op,
             op_number=op.op_number,
-            defaults={
-                "name": op.patient_name,
-                "age": op.age,
-                "gender": op.gender,
-                "phone": op.mobile,
-            }
+            name=op.patient_name,
+            age=op.age,
+            gender=op.gender,
+            phone=op.mobile,
         )
 
         return render(
             request,
-            'op_success.html',
+            "op_success.html",
             {
-                'op': op
+                "op": op
             }
         )
 
     return render(
         request,
-        'op_registration.html',
+        "op_registration.html",
         {
-            'doctors': doctors
+            "doctors": doctors
         }
     )
 
@@ -479,29 +481,16 @@ def billing_page(request):
                 )
 
                 if last_patient and last_patient.op_number:
-
                     try:
-
                         last_number = int(
-                            ''.join(
-                                filter(
-                                    str.isdigit,
-                                    last_patient.op_number
-                                )
-                            )
+                            last_patient.op_number.replace("OP", "")
                         )
-
                     except ValueError:
-
                         last_number = 0
-
                 else:
-
                     last_number = 0
 
-                new_op_number = (
-                    f"OP{last_number + 1:05d}"
-                )
+                new_op_number = f"OP{last_number + 1:05d}"
 
                 # ---------------------------------------------
                 # Create patient

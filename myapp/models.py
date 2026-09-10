@@ -64,21 +64,33 @@ class OPRegistration(models.Model):
                 .first()
             )
 
-            if last_op and last_op.op_number:
-
-                try:
-                    last_number = int(
-                        last_op.op_number.replace("OP", "")
-                    )
-                except:
-                    last_number = 0
-
-            else:
-                last_number = 0
-
-            self.op_number = (
-                f"OP{last_number + 1:05d}"
+            last_patient = (
+                Patient.objects
+                .order_by('-id')
+                .first()
             )
+
+            last_number = 0
+
+            if last_op and last_op.op_number:
+                try:
+                    last_number = max(
+                        last_number,
+                        int(last_op.op_number.replace("OP", ""))
+                    )
+                except ValueError:
+                    pass
+
+            if last_patient and last_patient.op_number:
+                try:
+                    last_number = max(
+                        last_number,
+                        int(last_patient.op_number.replace("OP", ""))
+                    )
+                except ValueError:
+                    pass
+
+            self.op_number = f"OP{last_number + 1:05d}"
 
         super().save(*args, **kwargs)
 
@@ -171,12 +183,13 @@ class Patient(models.Model):
         ("Female", "Female"),
         ("Other", "Other"),
     ]
-    
+
     op_registration = models.OneToOneField(
         OPRegistration,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        related_name="patient"
     )
 
     op_number = models.CharField(
@@ -214,8 +227,7 @@ class Patient(models.Model):
 
     def __str__(self):
         return f"{self.op_number} - {self.name}"
-
-
+    
 # ============================================================
 # TREATMENT
 # ============================================================
