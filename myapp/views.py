@@ -10,23 +10,182 @@ from .models import (
 
 def op_registration(request):
 
-    doctors = Doctor.objects.filter(available=True)
+    doctors = Doctor.objects.filter(
+        available=True
+    )
 
     if request.method == "POST":
 
+        # =====================================================
+        # CREATE OP REGISTRATION
+        # =====================================================
+
         op = OPRegistration.objects.create(
-            patient_name=request.POST.get("patient_name"),
-            mobile=request.POST.get("mobile"),
-            age=request.POST.get("age"),
-            gender=request.POST.get("gender"),
-            doctor_id=request.POST.get("doctor") or None,
-            appointment_date=request.POST.get("appointment_date"),
-            symptoms=request.POST.get("symptoms"),
+
+            # -----------------------------
+            # BASIC DETAILS
+            # -----------------------------
+
+            registration_date=request.POST.get(
+                "registration_date"
+            ),
+
+            patient_name=request.POST.get(
+                "patient_name"
+            ),
+
+            address=request.POST.get(
+                "address"
+            ),
+
+            nationality=request.POST.get(
+                "nationality"
+            ),
+
+            gender=request.POST.get(
+                "gender"
+            ),
+
+            age=request.POST.get(
+                "age"
+            ),
+
+            height=request.POST.get(
+                "height"
+            ) or None,
+
+            weight=request.POST.get(
+                "weight"
+            ) or None,
+
+            mobile=request.POST.get(
+                "mobile"
+            ),
+
+            telephone=request.POST.get(
+                "telephone"
+            ),
+
+            email=request.POST.get(
+                "email"
+            ),
+
+            # -----------------------------
+            # HOSPITAL DETAILS
+            # -----------------------------
+
+            ip_number=request.POST.get(
+                "ip_number"
+            ),
+
+            room_number=request.POST.get(
+                "room_number"
+            ),
+
+            date_of_admission=request.POST.get(
+                "date_of_admission"
+            ) or None,
+
+            date_of_discharge=request.POST.get(
+                "date_of_discharge"
+            ) or None,
+
+            diagnosis=request.POST.get(
+                "diagnosis"
+            ),
+
+            marital_status=request.POST.get(
+                "marital_status"
+            ),
+
+            # -----------------------------
+            # DOCTOR / APPOINTMENT
+            # -----------------------------
+
+            doctor_id=request.POST.get(
+                "doctor"
+            ) or None,
+
+            appointment_date=request.POST.get(
+                "appointment_date"
+            ),
+
+            symptoms=request.POST.get(
+                "symptoms"
+            ),
+
+            # -----------------------------
+            # MEDICAL HISTORY
+            # -----------------------------
+
+            presenting_complaints=request.POST.get(
+                "presenting_complaints"
+            ),
+
+            history_present_illness=request.POST.get(
+                "history_present_illness"
+            ),
+
+            # -----------------------------
+            # PREVIOUS CONDITIONS
+            # -----------------------------
+
+            diabetes=request.POST.get(
+                "diabetes"
+            ),
+
+            diabetes_details=request.POST.get(
+                "diabetes_details"
+            ),
+
+            high_bp=request.POST.get(
+                "high_bp"
+            ),
+
+            high_bp_details=request.POST.get(
+                "high_bp_details"
+            ),
+
+            cancer=request.POST.get(
+                "cancer"
+            ),
+
+            cancer_details=request.POST.get(
+                "cancer_details"
+            ),
+
+            arthritis=request.POST.get(
+                "arthritis"
+            ),
+
+            arthritis_details=request.POST.get(
+                "arthritis_details"
+            ),
+
+            asthma=request.POST.get(
+                "asthma"
+            ),
+
+            asthma_details=request.POST.get(
+                "asthma_details"
+            ),
+
+            allergy=request.POST.get(
+                "allergy"
+            ),
+
+            allergy_details=request.POST.get(
+                "allergy_details"
+            ),
+
+            history_past_illness=request.POST.get(
+                "history_past_illness"
+            ),
         )
 
-        # -------------------------------------------------
-        # Create Patient record linked to this OP
-        # -------------------------------------------------
+        # =====================================================
+        # CREATE PATIENT RECORD
+        # =====================================================
 
         Patient.objects.create(
             op_registration=op,
@@ -36,6 +195,10 @@ def op_registration(request):
             gender=op.gender,
             phone=op.mobile,
         )
+
+        # =====================================================
+        # SUCCESS PAGE
+        # =====================================================
 
         return render(
             request,

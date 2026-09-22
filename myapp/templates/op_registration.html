@@ -145,105 +145,742 @@
                     </p>
                 </div>
 
-                <form method="POST">
-                    {% csrf_token %}
+               <form method="POST">
 
-                    <div class="row">
+    {% csrf_token %}
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                Patient Name
-                            </label>
-                            <input type="text"
-                                   name="patient_name"
-                                   class="form-control"
-                                   required>
-                        </div>
+    <!-- =====================================================
+         BASIC PATIENT DETAILS
+    ====================================================== -->
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">
-                                Mobile Number
-                            </label>
-                            <input type="text"
-                                   name="mobile"
-                                   class="form-control"
-                                   required>
-                        </div>
+    <div class="row">
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">
-                                Age
-                            </label>
-                            <input type="number"
-                                   name="age"
-                                   class="form-control"
-                                   required>
-                        </div>
+        <!-- NAME -->
+        <div class="col-md-8 mb-3">
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">
-                                Gender
-                            </label>
-                            <select name="gender"
-                                    class="form-select">
-                                <option>Male</option>
-                                <option>Female</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
+            <label class="form-label">
+                Patient Name
+            </label>
 
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">
-                                Appointment Date
-                            </label>
-                            <input type="date"
-                                   name="appointment_date"
-                                   class="form-control"
-                                   required>
-                        </div>
+            <input
+                type="text"
+                name="patient_name"
+                class="form-control"
+                required
+            >
 
-                        <div class="col-md-12 mb-3">
-                            <label class="form-label">
-                                Select Doctor
-                            </label>
+        </div>
 
-                            <select name="doctor"
-                                    class="form-select">
 
-                                <option value="">
-                                    Any Available Doctor
-                                </option>
+        <!-- DATE -->
+        <div class="col-md-4 mb-3">
 
-                                {% for doctor in doctors %}
-                                <option value="{{ doctor.id }}">
-                                    Dr. {{ doctor.name }}
-                                    - {{ doctor.specialization }}
-                                </option>
-                                {% endfor %}
+            <label class="form-label">
+                Date
+            </label>
 
-                            </select>
-                        </div>
+            <input
+                type="date"
+                name="registration_date"
+                class="form-control"
+                required
+            >
 
-                        <div class="col-md-12 mb-4">
-                            <label class="form-label">
-                                Symptoms / Reason for Visit
-                            </label>
+        </div>
 
-                            <textarea name="symptoms"
-                                      rows="4"
-                                      class="form-control"></textarea>
-                        </div>
 
-                        <div class="col-12 text-center">
-                            <button type="submit"
-                                    class="op-btn">
-                                Register OP
-                            </button>
-                        </div>
+        <!-- ADDRESS -->
+        <div class="col-md-12 mb-3">
 
-                    </div>
+            <label class="form-label">
+                Address
+            </label>
+
+            <textarea
+                name="address"
+                class="form-control"
+                rows="2"
+            ></textarea>
+
+        </div>
+
+
+        <!-- NATIONALITY -->
+        <div class="col-md-4 mb-3">
+
+            <label class="form-label">
+                Nationality
+            </label>
+
+            <input
+                type="text"
+                name="nationality"
+                class="form-control"
+                value="Indian"
+            >
+
+        </div>
+
+
+        <!-- GENDER -->
+        <div class="col-md-4 mb-3">
+
+            <label class="form-label">
+                Sex
+            </label>
+
+            <select
+                name="gender"
+                class="form-select"
+                required
+            >
+
+                <option value="">
+                    Select Sex
+                </option>
+
+                <option value="Male">
+                    Male
+                </option>
+
+                <option value="Female">
+                    Female
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- OP NUMBER -->
+        <div class="col-md-4 mb-3">
+
+            <label class="form-label">
+                O.P. No.
+            </label>
+
+            <input
+                type="text"
+                class="form-control"
+                value="Auto Generated"
+                readonly
+            >
+
+        </div>
+
+
+        <!-- AGE -->
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Age
+            </label>
+
+            <input
+                type="number"
+                name="age"
+                class="form-control"
+                min="0"
+                max="150"
+                required
+            >
+
+        </div>
+
+
+        <!-- HEIGHT -->
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Height (cm)
+            </label>
+
+            <input
+                type="number"
+                name="height"
+                class="form-control"
+                step="0.01"
+                min="0"
+            >
+
+        </div>
+
+
+        <!-- WEIGHT -->
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                Weight (kg)
+            </label>
+
+            <input
+                type="number"
+                name="weight"
+                class="form-control"
+                step="0.01"
+                min="0"
+            >
+
+        </div>
+
+
+        <!-- IP NUMBER -->
+        <div class="col-md-3 mb-3">
+
+            <label class="form-label">
+                I.P. No.
+            </label>
+
+            <input
+                type="text"
+                name="ip_number"
+                class="form-control"
+            >
+
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                E-mail Address
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+            >
+
+        </div>
+
+
+        <!-- ROOM NUMBER -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Room No.
+            </label>
+
+            <input
+                type="text"
+                name="room_number"
+                class="form-control"
+            >
+
+        </div>
+
+
+        <!-- MOBILE -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Mobile Number
+            </label>
+
+            <input
+                type="tel"
+                name="mobile"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+
+        <!-- TELEPHONE -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Telephone No.
+            </label>
+
+            <input
+                type="tel"
+                name="telephone"
+                class="form-control"
+            >
+
+        </div>
+
+
+        <!-- DATE OF ADMISSION -->
+        <div class="col-md-4 mb-3">
+
+            <label class="form-label">
+                D.O.A.
+            </label>
+
+            <input
+                type="date"
+                name="date_of_admission"
+                class="form-control"
+            >
+
+        </div>
+
+
+        <!-- DATE OF DISCHARGE -->
+        <div class="col-md-4 mb-3">
+
+            <label class="form-label">
+                D.O.D.
+            </label>
+
+            <input
+                type="date"
+                name="date_of_discharge"
+                class="form-control"
+            >
+
+        </div>
+
+
+        <!-- MARITAL STATUS -->
+        <div class="col-md-4 mb-3">
+
+            <label class="form-label">
+                Marital Status
+            </label>
+
+            <select
+                name="marital_status"
+                class="form-select"
+            >
+
+                <option value="">
+                    Select Status
+                </option>
+
+                <option value="Single">
+                    Single
+                </option>
+
+                <option value="Married">
+                    Married
+                </option>
+
+                <option value="Divorced">
+                    Divorced
+                </option>
+
+                <option value="Widowed">
+                    Widowed
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DIAGNOSIS -->
+        <div class="col-md-12 mb-4">
+
+            <label class="form-label">
+                Diagnosis
+            </label>
+
+            <textarea
+                name="diagnosis"
+                class="form-control"
+                rows="3"
+            ></textarea>
+
+        </div>
+
+
+        <!-- =================================================
+             DOCTOR / APPOINTMENT
+        ================================================== -->
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Select Doctor
+            </label>
+
+            <select
+                name="doctor"
+                class="form-select"
+            >
+
+                <option value="">
+                    Any Available Doctor
+                </option>
+
+                {% for doctor in doctors %}
+
+                <option value="{{ doctor.id }}">
+
+                    Dr. {{ doctor.name }}
+                    - {{ doctor.specialization }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Appointment Date
+            </label>
+
+            <input
+                type="date"
+                name="appointment_date"
+                class="form-control"
+                required
+            >
+
+        </div>
+
+
+        <!-- =================================================
+             PRESENTING COMPLAINTS
+        ================================================== -->
+
+        <div class="col-md-12 mb-4">
+
+            <label class="form-label">
+                PRESENTING COMPLAINTS
+            </label>
+
+            <textarea
+                name="presenting_complaints"
+                class="form-control"
+                rows="5"
+                placeholder="Enter the patient's presenting complaints..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- =================================================
+             HISTORY OF PRESENT ILLNESS
+        ================================================== -->
+
+        <div class="col-md-12 mb-4">
+
+            <label class="form-label">
+                HISTORY OF PRESENT ILLNESS
+            </label>
+
+            <textarea
+                name="history_present_illness"
+                class="form-control"
+                rows="5"
+                placeholder="Enter history of present illness..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- =================================================
+             EXISTING CONDITIONS
+        ================================================== -->
+
+        <div class="col-md-12 mb-3">
+
+            <label class="form-label">
+                Do you have any of the following? If yes, give details.
+            </label>
+
+        </div>
+
+
+        <!-- DIABETES -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                D.M. (Diabetes Mellitus)
+            </label>
+
+            <select
+                name="diabetes"
+                class="form-select"
+            >
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="Yes">
+                    Yes
+                </option>
+
+                <option value="No">
+                    No
+                </option>
+
+            </select>
+
+            <textarea
+                name="diabetes_details"
+                class="form-control mt-2"
+                rows="2"
+                placeholder="If yes, give details"
+            ></textarea>
+
+        </div>
+
+
+        <!-- HIGH BP -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                High B.P.
+            </label>
+
+            <select
+                name="high_bp"
+                class="form-select"
+            >
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="Yes">
+                    Yes
+                </option>
+
+                <option value="No">
+                    No
+                </option>
+
+            </select>
+
+            <textarea
+                name="high_bp_details"
+                class="form-control mt-2"
+                rows="2"
+                placeholder="If yes, give details"
+            ></textarea>
+
+        </div>
+
+
+        <!-- CANCER -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Cancer
+            </label>
+
+            <select
+                name="cancer"
+                class="form-select"
+            >
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="Yes">
+                    Yes
+                </option>
+
+                <option value="No">
+                    No
+                </option>
+
+            </select>
+
+            <textarea
+                name="cancer_details"
+                class="form-control mt-2"
+                rows="2"
+                placeholder="If yes, give details"
+            ></textarea>
+
+        </div>
+
+
+        <!-- ARTHRITIS -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Arthritis
+            </label>
+
+            <select
+                name="arthritis"
+                class="form-select"
+            >
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="Yes">
+                    Yes
+                </option>
+
+                <option value="No">
+                    No
+                </option>
+
+            </select>
+
+            <textarea
+                name="arthritis_details"
+                class="form-control mt-2"
+                rows="2"
+                placeholder="If yes, give details"
+            ></textarea>
+
+        </div>
+
+
+        <!-- ASTHMA -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Asthma
+            </label>
+
+            <select
+                name="asthma"
+                class="form-select"
+            >
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="Yes">
+                    Yes
+                </option>
+
+                <option value="No">
+                    No
+                </option>
+
+            </select>
+
+            <textarea
+                name="asthma_details"
+                class="form-control mt-2"
+                rows="2"
+                placeholder="If yes, give details"
+            ></textarea>
+
+        </div>
+
+
+        <!-- ALLERGY -->
+        <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+                Allergy
+            </label>
+
+            <select
+                name="allergy"
+                class="form-select"
+            >
+
+                <option value="">
+                    Select
+                </option>
+
+                <option value="Yes">
+                    Yes
+                </option>
+
+                <option value="No">
+                    No
+                </option>
+
+            </select>
+
+            <textarea
+                name="allergy_details"
+                class="form-control mt-2"
+                rows="2"
+                placeholder="If yes, give details"
+            ></textarea>
+
+        </div>
+
+
+        <!-- =================================================
+             HISTORY OF PAST ILLNESS
+        ================================================== -->
+
+        <div class="col-md-12 mb-4">
+
+            <label class="form-label">
+                HISTORY OF PAST ILLNESS
+            </label>
+
+            <textarea
+                name="history_past_illness"
+                class="form-control"
+                rows="5"
+                placeholder="Enter history of past illness..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- =================================================
+             SYMPTOMS / REASON FOR VISIT
+        ================================================== -->
+
+        <div class="col-md-12 mb-4">
+
+            <label class="form-label">
+                Symptoms / Reason for Visit
+            </label>
+
+            <textarea
+                name="symptoms"
+                rows="4"
+                class="form-control"
+            ></textarea>
+
+        </div>
+
+
+        <!-- =================================================
+             SUBMIT
+        ================================================== -->
+
+        <div class="col-12 text-center">
+
+            <button
+                type="submit"
+                class="op-btn"
+            >
+                Register OP
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+
+
+
                 
-                </form>
 
             </div>
 

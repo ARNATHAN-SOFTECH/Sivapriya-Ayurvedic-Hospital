@@ -5,13 +5,17 @@ from .models import FAQCategory, FAQ
 from .models import OPRegistration
 
 
+
 @admin.register(OPRegistration)
 class OPRegistrationAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
+        'op_number',
         'patient_name',
         'mobile',
+        'gender',
+        'age',
         'doctor',
         'appointment_date',
         'token_number',
@@ -23,16 +27,133 @@ class OPRegistrationAdmin(admin.ModelAdmin):
         'status',
         'appointment_date',
         'doctor',
+        'gender',
+        'marital_status',
+        'diabetes',
+        'high_bp',
+        'cancer',
+        'arthritis',
+        'asthma',
+        'allergy',
     )
 
     search_fields = (
+        'op_number',
         'patient_name',
         'mobile',
+        'telephone',
+        'email',
+        'ip_number',
+        'diagnosis',
+    )
+
+    readonly_fields = (
+        'op_number',
+        'created_at',
     )
 
     ordering = (
         '-created_at',
     )
+
+    fieldsets = (
+
+        (
+            'OP Registration',
+            {
+                'fields': (
+                    'op_number',
+                    'registration_date',
+                    'status',
+                    'token_number',
+                )
+            }
+        ),
+
+        (
+            'Patient Details',
+            {
+                'fields': (
+                    'patient_name',
+                    'address',
+                    'nationality',
+                    'gender',
+                    'age',
+                    'height',
+                    'weight',
+                    'mobile',
+                    'telephone',
+                    'email',
+                    'marital_status',
+                )
+            }
+        ),
+
+        (
+            'Hospital Details',
+            {
+                'fields': (
+                    'ip_number',
+                    'room_number',
+                    'date_of_admission',
+                    'date_of_discharge',
+                    'diagnosis',
+                )
+            }
+        ),
+
+        (
+            'Doctor & Appointment',
+            {
+                'fields': (
+                    'doctor',
+                    'appointment_date',
+                    'symptoms',
+                )
+            }
+        ),
+
+        (
+            'Present Illness',
+            {
+                'fields': (
+                    'presenting_complaints',
+                    'history_present_illness',
+                )
+            }
+        ),
+
+        (
+            'Medical History',
+            {
+                'fields': (
+                    'diabetes',
+                    'diabetes_details',
+                    'high_bp',
+                    'high_bp_details',
+                    'cancer',
+                    'cancer_details',
+                    'arthritis',
+                    'arthritis_details',
+                    'asthma',
+                    'asthma_details',
+                    'allergy',
+                    'allergy_details',
+                    'history_past_illness',
+                )
+            }
+        ),
+
+        (
+            'System Information',
+            {
+                'fields': (
+                    'created_at',
+                )
+            }
+        ),
+    )
+     
 
 @admin.register(FAQCategory)
 class FAQCategoryAdmin(admin.ModelAdmin):

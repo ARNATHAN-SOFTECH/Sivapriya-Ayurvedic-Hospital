@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from django.utils import timezone
 
 
+
 class OPRegistration(models.Model):
 
     STATUS_CHOICES = (
@@ -11,23 +12,126 @@ class OPRegistration(models.Model):
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
     )
+
+    GENDER_CHOICES = (
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    )
+
+    MARITAL_STATUS_CHOICES = (
+        ('Single', 'Single'),
+        ('Married', 'Married'),
+        ('Divorced', 'Divorced'),
+        ('Widowed', 'Widowed'),
+        ('Other', 'Other'),
+    )
+
+    YES_NO_CHOICES = (
+        ('Yes', 'Yes'),
+        ('No', 'No'),
+    )
+
+    # =========================================================
+    # BASIC PATIENT DETAILS
+    # =========================================================
+
     op_number = models.CharField(
         max_length=30,
         unique=True,
         blank=True
     )
 
-    patient_name = models.CharField(max_length=150)
-    mobile = models.CharField(max_length=15)
-    age = models.PositiveIntegerField()
+    registration_date = models.DateField(
+        default=timezone.localdate
+    )
+
+    patient_name = models.CharField(
+        max_length=150
+    )
+
+    address = models.TextField(
+        blank=True
+    )
+
+    nationality = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
     gender = models.CharField(
         max_length=10,
-        choices=(
-            ('Male', 'Male'),
-            ('Female', 'Female'),
-            ('Other', 'Other'),
-        )
+        choices=GENDER_CHOICES
     )
+
+    age = models.PositiveIntegerField()
+
+    height = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        help_text="Height in cm"
+    )
+
+    weight = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        help_text="Weight in kg"
+    )
+
+    mobile = models.CharField(
+        max_length=15
+    )
+
+    telephone = models.CharField(
+        max_length=15,
+        blank=True
+    )
+
+    email = models.EmailField(
+        blank=True
+    )
+
+    # =========================================================
+    # HOSPITAL DETAILS
+    # =========================================================
+
+    ip_number = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    room_number = models.CharField(
+        max_length=30,
+        blank=True
+    )
+
+    date_of_admission = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    date_of_discharge = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    diagnosis = models.TextField(
+        blank=True
+    )
+
+    marital_status = models.CharField(
+        max_length=20,
+        choices=MARITAL_STATUS_CHOICES,
+        blank=True
+    )
+
+    # =========================================================
+    # DOCTOR / APPOINTMENT
+    # =========================================================
 
     doctor = models.ForeignKey(
         'Doctor',
@@ -37,7 +141,94 @@ class OPRegistration(models.Model):
     )
 
     appointment_date = models.DateField()
-    symptoms = models.TextField(blank=True)
+
+    symptoms = models.TextField(
+        blank=True
+    )
+
+    # =========================================================
+    # MEDICAL HISTORY
+    # =========================================================
+
+    presenting_complaints = models.TextField(
+        blank=True
+    )
+
+    history_present_illness = models.TextField(
+        blank=True
+    )
+
+    # =========================================================
+    # PREVIOUS CONDITIONS
+    # =========================================================
+
+    diabetes = models.CharField(
+        max_length=10,
+        choices=YES_NO_CHOICES,
+        blank=True
+    )
+
+    diabetes_details = models.TextField(
+        blank=True
+    )
+
+    high_bp = models.CharField(
+        max_length=10,
+        choices=YES_NO_CHOICES,
+        blank=True
+    )
+
+    high_bp_details = models.TextField(
+        blank=True
+    )
+
+    cancer = models.CharField(
+        max_length=10,
+        choices=YES_NO_CHOICES,
+        blank=True
+    )
+
+    cancer_details = models.TextField(
+        blank=True
+    )
+
+    arthritis = models.CharField(
+        max_length=10,
+        choices=YES_NO_CHOICES,
+        blank=True
+    )
+
+    arthritis_details = models.TextField(
+        blank=True
+    )
+
+    asthma = models.CharField(
+        max_length=10,
+        choices=YES_NO_CHOICES,
+        blank=True
+    )
+
+    asthma_details = models.TextField(
+        blank=True
+    )
+
+    allergy = models.CharField(
+        max_length=10,
+        choices=YES_NO_CHOICES,
+        blank=True
+    )
+
+    allergy_details = models.TextField(
+        blank=True
+    )
+
+    history_past_illness = models.TextField(
+        blank=True
+    )
+
+    # =========================================================
+    # OP STATUS
+    # =========================================================
 
     token_number = models.PositiveIntegerField(
         null=True,
@@ -53,6 +244,10 @@ class OPRegistration(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True
     )
+
+    # =========================================================
+    # AUTOMATIC OP NUMBER
+    # =========================================================
 
     def save(self, *args, **kwargs):
 
@@ -76,7 +271,12 @@ class OPRegistration(models.Model):
                 try:
                     last_number = max(
                         last_number,
-                        int(last_op.op_number.replace("OP", ""))
+                        int(
+                            last_op.op_number.replace(
+                                "OP",
+                                ""
+                            )
+                        )
                     )
                 except ValueError:
                     pass
@@ -85,16 +285,22 @@ class OPRegistration(models.Model):
                 try:
                     last_number = max(
                         last_number,
-                        int(last_patient.op_number.replace("OP", ""))
+                        int(
+                            last_patient.op_number.replace(
+                                "OP",
+                                ""
+                            )
+                        )
                     )
                 except ValueError:
                     pass
 
             self.op_number = f"OP{last_number + 1:05d}"
+
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.patient_name} - {self.appointment_date}"
+        return f"{self.op_number} - {self.patient_name}"
 
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
