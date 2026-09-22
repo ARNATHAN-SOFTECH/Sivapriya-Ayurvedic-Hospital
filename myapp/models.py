@@ -91,7 +91,6 @@ class OPRegistration(models.Model):
                     pass
 
             self.op_number = f"OP{last_number + 1:05d}"
-
         super().save(*args, **kwargs)
 
     def __str__(self):
