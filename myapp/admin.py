@@ -310,43 +310,31 @@ class BillAdmin(admin.ModelAdmin):
     list_display = (
         "bill_number",
         "patient",
-        "bill_date",
         "grand_total",
         "paid_amount",
         "balance_amount",
-        "payment_method",
         "status",
+        "payment_method",
+        "bill_date",
+    )
+
+    list_filter = (
+        "status",
+        "payment_method",
+        "bill_date",
     )
 
     search_fields = (
         "bill_number",
-        "patient__op_number",
         "patient__name",
-        "patient__phone",
-    )
-
-    list_filter = (
-        "payment_method",
-        "status",
-        "bill_date",
+        "patient__op_number",
+        "payment_reference",
     )
 
     readonly_fields = (
         "bill_number",
         "bill_date",
-        "grand_total",
-        "balance_amount",
-        "status",
     )
-
-    ordering = (
-        "-bill_date",
-    )
-
-    inlines = (
-        BillItemInline,
-    )
-
 
 # ============================================================
 # BILL ITEM ADMIN

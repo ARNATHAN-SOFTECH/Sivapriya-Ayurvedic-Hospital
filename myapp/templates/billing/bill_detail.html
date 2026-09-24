@@ -193,6 +193,7 @@ Bill {{ bill.bill_number }} | Sivapriya Ayurvedic Hospital
 </style>
 
 
+
 <div class="invoice-page">
 
     <div class="invoice">
@@ -201,9 +202,23 @@ Bill {{ bill.bill_number }} | Sivapriya Ayurvedic Hospital
 
             <div>
 
-                <h1 class="hospital-name">
-                    Sivapriya Ayurvedic Hospital
-                </h1>
+<div>
+    <h1 class="hospital-name">
+        Sivapriya
+    </h1>
+
+    <div style="font-size:20px;font-weight:600;">
+        Ayurvedic Hospital
+    </div>
+
+    <div class="hospital-subtitle">
+        Karamcode P.O, Kollam
+    </div>
+
+    <div class="hospital-subtitle">
+        Phone: +91 94476 47612
+    </div>
+</div>
 
                 <div class="hospital-subtitle">
                     Ayurveda Healthcare & Wellness
@@ -232,54 +247,61 @@ Bill {{ bill.bill_number }} | Sivapriya Ayurvedic Hospital
 
         <!-- PATIENT -->
 
-        <div class="patient-section">
+<div class="patient-section">
 
-            <div class="patient-box">
+    <div class="patient-box">
+        <strong>Patient Name</strong>
+        {{ bill.patient.name|default:"" }}
+    </div>
 
-                <strong>
-                    OP Number
-                </strong>
+    <div class="patient-box">
+        <strong>OP No</strong>
+        {{ bill.patient.op_number|default:"" }}
+    </div>
 
-                {{ bill.patient.op_number }}
+    <div class="patient-box">
+        <strong>IP No</strong>
+        {{ bill.patient.ip_number|default:"" }}
+    </div>
 
-            </div>
+    <div class="patient-box">
+        <strong>Room No</strong>
+        {{ bill.patient.room_number|default:"" }}
+    </div>
 
+    <div class="patient-box">
+        <strong>Age / Gender</strong>
+        {{ bill.patient.age|default:"" }}
+        /
+        {{ bill.patient.gender|default:"" }}
+    </div>
 
-            <div class="patient-box">
+    <div class="patient-box">
+        <strong>Phone</strong>
+        {{ bill.patient.phone|default:"" }}
+    </div>
 
-                <strong>
-                    Patient Name
-                </strong>
+    <div class="patient-box">
+        <strong>Address</strong>
+        {{ bill.patient.address|default:"" }}
+    </div>
 
-                {{ bill.patient.name }}
+    <div class="patient-box">
+        <strong>Consulting Doctor</strong>
+        {{ bill.patient.doctor.name|default:"" }}
+    </div>
 
-            </div>
+    <div class="patient-box">
+        <strong>DOA</strong>
+        {{ bill.patient.date_of_admission|date:"d-m-Y"|default:"" }}
+    </div>
 
+    <div class="patient-box">
+        <strong>DOD</strong>
+        {{ bill.patient.date_of_discharge|date:"d-m-Y"|default:"" }}
+    </div>
 
-            <div class="patient-box">
-
-                <strong>
-                    Age / Gender
-                </strong>
-
-                {{ bill.patient.age }}
-                /
-                {{ bill.patient.gender }}
-
-            </div>
-
-
-            <div class="patient-box">
-
-                <strong>
-                    Phone
-                </strong>
-
-                {{ bill.patient.phone }}
-
-            </div>
-
-        </div>
+</div>
 
 
         <!-- ITEMS -->

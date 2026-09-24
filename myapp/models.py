@@ -426,6 +426,35 @@ class Patient(models.Model):
         blank=True
     )
 
+    ip_number = models.CharField(
+        max_length=30,
+        blank=True,
+        null=True
+    )
+
+    room_number = models.CharField(
+        max_length=30,
+        blank=True,
+        null=True
+    )
+
+    doctor = models.ForeignKey(
+        'Doctor',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+
+    date_of_admission = models.DateField(
+        null=True,
+        blank=True
+    )
+
+    date_of_discharge = models.DateField(
+        null=True,
+        blank=True
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -560,6 +589,32 @@ class Bill(models.Model):
         default="Pending"
     )
 
+    payment_reference = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        help_text="UPI Transaction ID / Card Ref No"
+    )
+
+    diagnosis = models.TextField(
+        blank=True,
+        help_text="Doctor diagnosis at billing time"
+    )
+
+    prescription_notes = models.TextField(
+        blank=True,
+        help_text="Medicine instructions"
+    )
+
+    collected_by = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
     notes = models.TextField(
         blank=True
     )
@@ -590,6 +645,17 @@ class Bill(models.Model):
             self.bill_number = (
                 f"BILL-{today}-{last_number + 1:04d}"
             )
+
+        # Auto update balance
+        self.balance_amount = self.grand_total - self.paid_amount
+
+        # Auto update status
+        if self.paid_amount >= self.grand_total:
+            self.status = "Paid"
+        elif self.paid_amount > 0:
+            self.status = "Partial"
+        else:
+            self.status = "Pending"
 
         super().save(*args, **kwargs)
 
